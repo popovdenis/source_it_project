@@ -24,7 +24,7 @@ class Role
     {
         $config = $this->config();
         if (!empty($config)) {
-            $link = mysqli_connect($config['host'], $config['user'], $config['password']);
+            $link = mysqli_connect($config['host'], $config['username'], $config['password']);
             if (!$link) {
                 echo("Не удалось подключиться: " . mysqli_connect_error());
                 exit();

@@ -10,6 +10,7 @@ $role->setR($role->getRoles('role'));
     <title>ROLE</title>
 </head>
 <body>
+<a href="forma.php">Добавить роль</a>
 <center><h1>Role</h1></center>
 <table border="1" width="100%">
     <tr>
