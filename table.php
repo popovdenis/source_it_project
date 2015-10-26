@@ -2,7 +2,6 @@
 include "Role.php";
 $role = new Role;
 $role->setR($role->getRoles('role'));
-$rssnews->buildRss($news);
 ?>
 <!DOCTYPE html>
 <html>
