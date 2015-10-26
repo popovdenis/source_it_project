@@ -10,7 +10,7 @@ $role->setR($role->getRoles('role'));
     <title>ROLE</title>
 </head>
 <body>
-<a href="forma.php">Добавить роль</a>
+<a href="forma.php"><img src='icon/add.jpg' title='Добавить роль' style='float:right' width='20'></a>
 <center><h1>Role</h1></center>
 <table border="1" width="100%">
     <tr>
@@ -18,7 +18,7 @@ $role->setR($role->getRoles('role'));
     </tr>
     <?php
     foreach($role->getRoles('role') as $val) {
-        echo '<tr><td>' .$val['role']."<a href='forma.php'><img src='icon/redact.jpg' style='float:right' width='20'><a href=".$role->deleteRole()."></a><img src='icon/delete.jpg' style='float:right' width='20'></a></td></tr>";
+        echo '<tr><td>' .$val['role']."<a href='forma.php'><img src='icon/redact.jpg' title='Редактировать роль' style='float:right' width='20'><a href=".$role->deleteRole()."></a><img src='icon/delete.jpg' title='Удалить роль' style='float:right' width='20'></a></td></tr>";
     }
     ?>
 </table>
