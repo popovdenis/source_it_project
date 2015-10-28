@@ -1,11 +1,11 @@
-CREATE DATABASE new_db;
-USE new_db;
+CREATE DATABASE mysite;
+USE mysite;
 CREATE TABLE user(
-	`id` int primary key autoincrement,
+	`id` int primary key auto_increment,
 	`firstname` varchar(50) NOT NULL,
 	`lastname` varchar(50) NOT NULL,
 	`email` varchar(50) NOT NULL,
 	`password` varchar(100) NOT NULL,
 	`phone` varchar(30),
-	`created_at` datetime, NOT NULL
+	`created_at` datetime
  );

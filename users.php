@@ -1,7 +1,21 @@
 <?php
 include 'funcs.php';
 $users = new User();
-$res = $users->getUsers('localhost', 'root', '', 'new_user_db');
+$res = $users->getUsers();
+if (isset($_GET['reduser']) and !empty($_GET['reduser'])) {
+    session_start();
+    $id = $_GET['reduser'];
+    $user_info = $users->getUser($id);
+    $_SESSION['user'] = $user_info;
+    header("Location: red_user.php");
+
+
+}
+if (isset($_GET['deluser']) and !empty($_GET['deluser'])) {
+    $id = $_GET['deluser'];
+    $users->deleteUser($id);
+    header("Location: users.php");
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,12 +25,13 @@ $res = $users->getUsers('localhost', 'root', '', 'new_user_db');
 <body>
 <table border="1" width="100%">
     <tr>
-        <th>Id</th>
+        <th>ID</th>
         <th>Name</th>
         <th>Last Name</th>
         <th>Email</th>
         <th>Phone</th>
         <th>Created at</th>
+        <th>Правка</th>
     </tr>
     <?php
     foreach ($res as $value) {
@@ -28,6 +43,12 @@ $res = $users->getUsers('localhost', 'root', '', 'new_user_db');
             <td><?= $value['email'] ?></td>
             <td><?= $value['phone'] ?></td>
             <td><?= $value['created_at'] ?></td>
+            <td>
+                <a href="?deluser='<?= $value['id'] ?>'"
+                   style="display: block;">Удалить</a>
+                <a href="?reduser='<?= $value['id'] ?>'"
+                   style="display: block;">Редактировать</a>
+            </td>
         </tr>
     <?
     }
