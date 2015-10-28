@@ -1,3 +1,6 @@
+<?php
+include_once("defines.php");
+?>
 <html>
 <head>
     <title>Online-test</title>

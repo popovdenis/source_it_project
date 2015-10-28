@@ -1,8 +1,8 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . "/model/Question.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/connectionManager/DB_connection.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/dao/QuestionsDao.php";
+require_once BASE_DIR . "/model/Question.php";
+require_once BASE_DIR . "/connectionManager/DB_connection.php";
+require_once BASE_DIR . "/dao/QuestionsDao.php";
 
 /**
  * @author Maria Ostashevskaya
