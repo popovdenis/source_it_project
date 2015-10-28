@@ -6,20 +6,9 @@ class Answer
     private $answer;
     private $id;
 
-    public function __construct($id,$answer)
+     public function __construct($answer, $id)
     {
         $this->answer = $answer;
-        $this->id = $id;
-    }
-
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function setId($id)
-    {
         $this->id = $id;
     }
 
@@ -29,9 +18,22 @@ class Answer
         return $this->answer;
     }
 
+
     public function setAnswer($answer)
     {
         $this->answer = $answer;
+    }
+
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
 

@@ -3,6 +3,7 @@
  * Add question and answers in DB.
  */
 
+include_once("defines.php");
 require_once BASE_DIR . "/dao/ImplQuestionDao.php";
 require_once BASE_DIR . "/dao/ImplAnswerDau.php";
 

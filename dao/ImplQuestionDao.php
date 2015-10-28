@@ -28,7 +28,7 @@ class QuestionDaoImpl implements QuestionsDao
 
     public function getAllQuestions()  //получить список вопросов
     {
-        $sql = "SELECT `question` FROM `question`";
+        $sql = "SELECT * FROM `question`";
 
         $query_result = mysqli_query(DB_connection::db_connect(), $sql);
 
@@ -81,7 +81,7 @@ class QuestionDaoImpl implements QuestionsDao
 
     public function getAnswersByQuestion($id)//получить список ответов на вопрос
     {
-        $sql = "SELECT `answer` FROM `answer`
+        $sql = "SELECT * FROM `answer`
         INNER JOIN `question_answer`
         ON `answer`.`id` = `question_answer`.`answer_id`
         INNER JOIN `question`
@@ -98,9 +98,9 @@ class QuestionDaoImpl implements QuestionsDao
                 $id = $row[0];
                 $text = $row[1];
 
-                $arrResult[] = new Answer($id, $text);
+                $arrResult[] = new Answer($text, $id);
             }
-            return  $arrResult;
+            return $arrResult;
         }
     }
 
