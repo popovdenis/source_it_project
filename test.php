@@ -1,6 +1,9 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . "/dao/QuestionDaoImpl.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/dao/AnswerDauImpl.php";
+
+include_once("defines.php");
+
+require_once BASE_DIR . "/dao/ImplQuestionDao.php";
+require_once BASE_DIR . "/dao/ImplAnswerDau.php";
 
 /**
  * test
@@ -11,7 +14,7 @@ $answerDao = new AnswerDaoImpl();
 
 //echo $answerDao->getAnswerId('fh');// получить id ответа
 
-//print_r($questionDao->getAllQuestions()); //получить список вопросов
+print_r($questionDao->getAllQuestions()); //получить список вопросов
 
 //echo $questionDao->updateQuestion(11,"rrrrrrrrrrrr");   //обновить вопрос
 

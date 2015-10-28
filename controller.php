@@ -2,10 +2,9 @@
 /**
  * Add question and answers in DB.
  */
-define("BASE_DIR", realpath(dirname(__FILE__)));
 
-require_once BASE_DIR . "/dao/QuestionDaoImpl.php";
-require_once BASE_DIR . "/dao/AnswerDauImpl.php";
+require_once BASE_DIR . "/dao/ImplQuestionDao.php";
+require_once BASE_DIR . "/dao/ImplAnswerDau.php";
 
 $currentQuestion;
 
