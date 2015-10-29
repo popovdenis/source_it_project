@@ -79,6 +79,9 @@ VALUES ('$role')");
 
     public function putRole($table, $id, $role)
     {
+        $role = $this->del_gaps($role);
+        $role = $this->del_tags($role);
+        $role = mysqli_escape_string(self::$db, $role);
         $sql = mysqli_query(self::$db, "UPDATE $table SET role='$role' WHERE id='$id'");
         if ($sql) {
             return '<center>Данные успешно обновлены</center>';
