@@ -53,7 +53,7 @@ class Role
 
     public function getRoles($tbl_name)
     {
-        $sql = "SELECT * FROM $tbl_name";
+        $sql = "SELECT * FROM $tbl_name ORDER BY id";
         $result = mysqli_query(self::$db, $sql);
         if (!$result) {
             return false;

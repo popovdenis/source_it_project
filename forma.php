@@ -8,7 +8,7 @@ if (isset($_POST['role']) && !empty($_POST['role'])) {
     echo '<center><b>' . "Заполните поле" . '</b></center>';
 }
 ?>
-<body bgcolor="#87cefa">
+<body bgcolor="#ffe4b5">
 <center>
     <form action="" method="post">
         Role:<input name="role" type="text">
