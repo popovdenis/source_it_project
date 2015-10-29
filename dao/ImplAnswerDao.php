@@ -27,7 +27,7 @@ class AnswerDaoImpl implements AnswersDao
 
     public function getAllAnswers()  //получить список ответов
     {
-        $sql = "SELECT `answer` FROM `answer`";
+        $sql = "SELECT `answer` FROM `answer` WHERE `trueAnswer`='1'";
 
         $query_result = mysqli_query(DB_connection::db_connect(), $sql);
 
@@ -41,10 +41,10 @@ class AnswerDaoImpl implements AnswersDao
         return $answers;
     }
 
-    public function saveAnswer($answer) //сохранить ответ
+    public function saveAnswer($answer,$trueAnswer) //сохранить ответ
     {
 
-        $sql = "INSERT INTO `answer` (`answer`) VALUES ('$answer')";
+        $sql = "INSERT INTO `answer` (`answer`,`trueAnswer`) VALUES ('$answer','$trueAnswer')";
         $query = mysqli_query(DB_connection::db_connect(), $sql);
         if ($query) {
             return " ответ сохранён! ";
@@ -78,6 +78,20 @@ class AnswerDaoImpl implements AnswersDao
             $id = $row[0];
         }
         return $id;
+    }
+
+    public function getTrueAnswer($id)
+    {
+        $sql = "SELECT `trueAnswer` FROM `answer` WHERE `id`='$id'";
+
+        $trueAnswer = null;
+        $query_result = mysqli_query(DB_connection::db_connect(), $sql);
+
+        while ($row = mysqli_fetch_array($query_result)) {
+            $trueAnswer = $row[0];
+        }
+        return $trueAnswer;
+
     }
 
     public function deleteAnswer($id)// удалить ответ

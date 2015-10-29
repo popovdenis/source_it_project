@@ -5,11 +5,25 @@ class Answer
 
     private $answer;
     private $id;
+    private $trueAnswer;
 
-     public function __construct($answer, $id)
+    public function __construct($answer, $id, $trueAnswer = null)
     {
         $this->answer = $answer;
         $this->id = $id;
+        $this->trueAnswer = $trueAnswer;
+    }
+
+
+    public function getTrueAnswer()
+    {
+        return $this->trueAnswer;
+    }
+
+
+    public function setTrueAnswer($trueAnswer)
+    {
+        $this->trueAnswer = $trueAnswer;
     }
 
 
