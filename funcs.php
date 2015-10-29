@@ -13,7 +13,7 @@ class User extends DataBase
     private $phone;
     private $created_at = "NOW()";
 
-    function setUser($f_name, $l_name, $email_, $pass, $phone_ = '')
+    public function setUser($f_name, $l_name, $email_, $pass, $phone_ = '')
     {
         $this->firstname = $f_name;
         $this->lastname = $l_name;
@@ -41,9 +41,11 @@ class User extends DataBase
         return $user[0];
     }
 
-    public function getUsers()
+    public function getUsers($order = 'id', $param = false)
     {
-        $sql = "SELECT * FROM user";
+
+        $sql = ($param) ? "SELECT * FROM user ORDER BY $order DESC"
+            : "SELECT * FROM user ORDER BY $order";
         $this->execute($sql);
         while ($res = mysqli_fetch_array($this->result, MYSQLI_ASSOC)) {
             $arr[] = $res;
@@ -106,5 +108,7 @@ class User extends DataBase
     }
 }
 
+$user_arr = array('id', 'firstname', 'lastname', 'email', 'phone',
+                  'created_at'); //массив для сортировки
 
 ?>

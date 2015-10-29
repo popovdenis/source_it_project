@@ -34,7 +34,7 @@ if (!empty($_POST['f_name']) and !empty($_POST['l_name']) and
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Reduct user to db</title>
+    <title>Edit user</title>
 </head>
 <body>
 <a href="users.php">К списку пользователей</a>
