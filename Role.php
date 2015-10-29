@@ -16,34 +16,21 @@
  * deleteRole ­ удалить роль
  * getUsersByRole ­ получение списка пользователей по роли
  */
+include "MyiDB.php";
+
 class Role
 {
+    /**
+     * @var mysqli
+     */
+    public static $db = null;
     public $role;
 
-    private function connect()
+    public function  __construct()
     {
-        $config = $this->config();
-        if (!empty($config)) {
-            $link = mysqli_connect($config['host'], $config['username'], $config['password']);
-            if (!$link) {
-                echo("Не удалось подключиться: " . mysqli_connect_error());
-                exit();
-            } else {
-                $db_selected = mysqli_select_db($link, $config['database']);
-                if (!$db_selected) {
-                    echo("База данных progect не найдена ");
-                    exit();
-                }
-                return $link;
-            }
-        }
+        self::$db = MyiDB::getInstance()->getConnection();
     }
 
-    private function config()
-    {
-        $config = parse_ini_file("config.ini");
-        return $config;
-    }
     private function del_gaps($arr)
     {
         return trim($arr);
@@ -63,10 +50,11 @@ class Role
     {
         $this->role;
     }
+
     public function getRoles($tbl_name)
     {
         $sql = "SELECT * FROM $tbl_name";
-        $result = mysqli_query($this->connect(), $sql);
+        $result = mysqli_query(self::$db, $sql);
         if (!$result) {
             return false;
         } else {
@@ -79,32 +67,45 @@ class Role
     {
         $role = $this->del_gaps($role);
         $role = $this->del_tags($role);
-        $role = mysqli_escape_string($this->connect(), $role);
-        $sql = mysqli_query($this->connect(), "INSERT INTO $table (`role`)
+        $role = mysqli_escape_string(self::$db, $role);
+        $sql = mysqli_query(self::$db, "INSERT INTO $table (`role`)
 VALUES ('$role')");
         if ($sql) {
-            return 'Данные успешно сохранены';
+            return '<center>Данные успешно сохранены</center>';
         } else {
-            return 'Данные не сохранены';
+            return '<center>Данные не сохранены</center>';
         }
     }
 
-    public function putRole()
+    public function putRole($table, $id, $role)
     {
-
+        $sql = mysqli_query(self::$db, "UPDATE $table SET role='$role' WHERE id='$id'");
+        if ($sql) {
+            return '<center>Данные успешно обновлены</center>';
+        } else {
+            return '<center>Данные не обновлены</center>';
+        }
     }
 
-    public function deleteRole()
+    public function deleteRole($table, $id)
     {
-
+        return $sql = mysqli_query(self::$db, "DELETE FROM $table WHERE id=$id");
     }
 
-    public function getUsersByRole()
+    public function getUsersByRole($tbl_name, $id)
     {
-
+        $sql = "SELECT `user` FROM $tbl_name WHERE id='$id'";
+        $result = mysqli_query(self::$db, $sql);
+        if (!$result) {
+            return false;
+        } else {
+            $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            return $row;
+        }
     }
+
     public function close()
     {
-        return mysqli_close($this->connect());
+        return mysqli_close(self::$db);
     }
 }
