@@ -13,7 +13,7 @@ $result = 0;
 
 $countTrueAnswer = count($answerDao->getAllAnswers());//колличество правильных ответов
 
-for ($i = 0; $i < $countQuestions * 5; $i++) {
+for ($i = 0; $i <= $countQuestions * 5; $i++) {
 
     if (isset($_POST[$i]) && $_POST[$i] == 1) {
 
