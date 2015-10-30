@@ -41,7 +41,7 @@ if (isset($_GET['deluser']) and !empty($_GET['deluser'])) {
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="js/jquery-1.11.3.js"></script>
     <style type="text/css">
-        .wait-bar{
+        .wait-bar {
             position: absolute;
             left: 50%;
             top: 50%;
@@ -52,68 +52,68 @@ if (isset($_GET['deluser']) and !empty($_GET['deluser'])) {
 </head>
 <body>
 <div class='content'>
-<div class='wait-bar'></div>
-<a href="index.php">Добавить нового пользователя</a>
-<table border="1" width="100%">
-    <tr>
-        <th onclick="location.href='?sort=0'">ID</th>
-        <th onclick="location.href='?sort=1'">Name</th>
-        <th onclick="location.href='?sort=2'">Last Name</th>
-        <th onclick="location.href='?sort=3'">Email</th>
-        <th onclick="location.href='?sort=4'">Phone</th>
-        <th onclick="location.href='?sort=5'">Created at</th>
-        <th>Action</th>
-    </tr>
-    <?php
-    foreach ($res as $value) {
-        ?>
+    <div class='wait-bar'></div>
+    <a href="index.php">Добавить нового пользователя</a>
+    <table border="1" width="100%">
         <tr>
-            <td><?= $value['id'] ?></td>
-            <td><?= $value['firstname'] ?></td>
-            <td><?= $value['lastname'] ?></td>
-            <td><?= $value['email'] ?></td>
-            <td><?= $value['phone'] ?></td>
-            <td><?= $value['created_at'] ?></td>
-            <td>
-                <a href="?deluser='<?= $value['id'] ?>'"
-                   style="display: block;">Удалить</a>
-                <a href="?reduser='<?= $value['id'] ?>'"
-                   style="display: block;">Редактировать</a>
-            </td>
+            <th onclick="location.href='?sort=0'">ID</th>
+            <th onclick="location.href='?sort=1'">Name</th>
+            <th onclick="location.href='?sort=2'">Last Name</th>
+            <th onclick="location.href='?sort=3'">Email</th>
+            <th onclick="location.href='?sort=4'">Phone</th>
+            <th onclick="location.href='?sort=5'">Created at</th>
+            <th>Action</th>
         </tr>
-    <?php
-    }
-    ?>
-</table>
+        <?php
+        foreach ($res as $value) {
+            ?>
+            <tr>
+                <td><?= $value['id'] ?></td>
+                <td><?= $value['firstname'] ?></td>
+                <td><?= $value['lastname'] ?></td>
+                <td><?= $value['email'] ?></td>
+                <td><?= $value['phone'] ?></td>
+                <td><?= $value['created_at'] ?></td>
+                <td>
+                    <a href="?deluser='<?= $value['id'] ?>'"
+                       style="display: block;">Удалить</a>
+                    <a href="?reduser='<?= $value['id'] ?>'"
+                       style="display: block;">Редактировать</a>
+                </td>
+            </tr>
+        <?php
+        }
+        ?>
+    </table>
 </div>
 </body>
 </html>
 <script type="text/javascript">
 
-$('table').find('a').click(function(event){
-    $q = $(this).attr('href');
-    if(!$q.indexOf('?deluser')){
-         event.preventDefault();
-        $url = "users.php" + $q;
-    $.ajax({
-        url: $url,
-        beforeSend: function(){
-            $('.wait-bar').css('background-image', 'url(./images/load.gif)');
-        },
-        error: function(){
-            alert('AJAX ERROR');
-        },
-        success: function(data) {
-            $('.wait-bar').css('background-image', 'none');
-            $('body').html(data);
+    $('table').find('a').click(function (event) {
+        event.preventDefault();
+        $q = $(this).attr('href');
+        if (!$q.indexOf('?deluser')) {
+            $url = "users.php" + $q;
+            if (confirm('Вы собираетесь удалить пользователя. Подтвердите действие.')) {
+                $.ajax({
+                    url: $url,
+                    beforeSend: function () {
+                        $('.wait-bar').css('background-image', 'url(./images/load.gif)');
+                    },
+                    error: function () {
+                        alert('AJAX ERROR');
+                    },
+                    success: function (data) {
+                        $('.wait-bar').css('background-image', 'none');
+                        $('body').html(data);
+                    }
+                });
+            }
+        } else {
+            console.log('red');
         }
-    });
-    }else{
-        console.log('red');
-    }
-})
-
-
+    })
 
 
 </script>
