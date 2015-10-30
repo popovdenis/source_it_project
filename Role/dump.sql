@@ -1,0 +1,6 @@
+# CREATE DATABASE progect;
+USE progect;
+CREATE TABLE role(
+  `id` INT(5) PRIMARY KEY AUTO_INCREMENT,
+  `role` VARCHAR(20)
+);
