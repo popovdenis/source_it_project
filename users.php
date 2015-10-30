@@ -91,9 +91,9 @@ if (isset($_GET['deluser']) and !empty($_GET['deluser'])) {
 <script type="text/javascript">
 
     $('table').find('a').click(function (event) {
-        event.preventDefault();
         $q = $(this).attr('href');
         if (!$q.indexOf('?deluser')) {
+            event.preventDefault();
             $url = "users.php" + $q;
             if (confirm('Вы собираетесь удалить пользователя. Подтвердите действие.')) {
                 $.ajax({
