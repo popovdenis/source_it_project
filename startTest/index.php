@@ -1,55 +1,39 @@
-<?php
-header("Content-type: text/html; charset=utf-8");
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../res/css/materialize.min.css" media="screen,projection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script type="text/javascript" src="../res/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="../res/js/materialize.min.js"></script>
+</head>
+<body class="deep-orange lighten-5">
 
-include_once("../defines.php");
-require_once BASE_DIR . "/dao/ImplQuestionDao.php";
-require_once BASE_DIR . "/dao/ImplAnswerDao.php";
+<nav>
+    <div class="nav-wrapper  red lighten-2">
+        <a href="#" class="brand-logo right">Online-test</a>
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <li><a href="index.php">На главную</a></li>
+        </ul>
+    </div>
+</nav>
 
-if (!isset($_POST['test'])) {
-    $title = 'Пройдите тест!'; ?>
-    <h3><?php echo $title; ?></h3>
-    <form action="" method="post">
-        <input type="hidden" name="test">
-        <input type="submit" value="Начать тест">
-    </form>
-    <?php
-} else {
-    $questionDao = new QuestionDaoImpl();
-    $answerDao = new AnswerDaoImpl();
+<div class="container row">
 
-    $countWrightAnswers = 0;
+    <div class="col l5 offset-l4">
 
-    echo " <form action='result.php' method='post'>";
-    echo "<table cellpadding='5' cellspacing='0' border='1' width='50%'>";
-    foreach ($questionDao->getAllQuestions() as $keyQuestion => $valQuestion) {
+        <h3 class="flow-text cyan-text text-darken-4">Пройдите тест!</h3>
 
-        echo "<tr>";
+        <form action="test.php" method="post">
 
-        echo "<td>";
-        print $valQuestion->getQuestion();
-        echo "<br>";
-        echo "</td>";
+            <input type="hidden" name="test">
+            <button class='waves-effect waves-teal btn-large' type="submit">
+                <i class='material-icons left large'>play_circle_outline</i>Начать тест
+            </button>
+        </form>
+    </div>
 
-        echo "<td>";
-
-        foreach ($questionDao->getAnswersByQuestion($valQuestion->getId()) as $valAnswerByQuestion) {
-
-            $countWrightAnswers++;
-            $trueOrFalse = $answerDao->getTrueAnswer($valAnswerByQuestion->getId());
-
-            echo "<input type='checkbox' name = '$countWrightAnswers' value='$trueOrFalse' id='$valAnswerByQuestion->getId()'>";
-
-            echo "<label for='.$valAnswerByQuestion->getId().'>";
-            print $valAnswerByQuestion->getAnswer();
-            echo "<br>";
-            echo "</label><Br>";
-
-        }
-        echo "</td>";
-        echo "</tr>";
-    }
-    echo "</table><br> ";
-    echo "<input type='submit' value='Узнать результат' ></form>";
-}
-
+</div>
+</body>
+</html>
 
