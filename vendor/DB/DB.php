@@ -6,6 +6,7 @@ trait DB
      * @var mysqli Mysqli entity.
      */
     private $connection;
+
     /**
      * @var DB
      */
@@ -13,7 +14,7 @@ trait DB
 
     private function __construct()
     {
-        $config = $this->getConfig();
+        $config = Config::getConfig();
         if (empty($config)) {
             throw new Exception('Config file does no exist');
         }
@@ -34,17 +35,10 @@ trait DB
         $this->connection = $mysql;
     }
 
-    private function __clone()
-    {
-    }
+    private function __clone() {}
 
-    private function getConfig()
-    {
-        if (file_exists('config.ini')) {
-            return parse_ini_file('config.ini');
-        } else {
-            return null;
-        }
+    public function __sleep() {
+        throw new Exception("It is not possible to create double DB class");
     }
 
     public static function getInstance()
