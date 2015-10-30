@@ -16,7 +16,7 @@ include_once("defines.php");
     <div class="nav-wrapper  red lighten-2">
         <a href="#" class="brand-logo right">Online-test</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <li><a href="/startTest/index.php">На главную</a></li>
+            <li><a href="startTest/index.php">На главную</a></li>
         </ul>
     </div>
 </nav>
@@ -27,7 +27,7 @@ include_once("defines.php");
 
 
         <h6 class=' cyan-text text-darken-3 '> Напишите вопрос: <input type="text" name="question"/></h6>
-        <h6 class=' cyan-text text-darken-3 '> Вводите 5 вариантов ответов , напротив правильных вариантов поставте
+        <h6 class=' cyan-text text-darken-3 '> Вводите варианты ответов , напротив правильных вариантов поставте
             галочку и нажмите "отправить"</h6>
 
         <div class="row">
