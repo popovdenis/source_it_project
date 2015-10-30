@@ -16,29 +16,19 @@
  * deleteRole ­ удалить роль
  * getUsersByRole ­ получение списка пользователей по роли
  */
-include "MyiDB.php";
+include_once "DataBase.php";
 
 class Role
 {
     /**
-     * @var mysqli
+     * @var Database
      */
-    public static $db = null;
+    private $database;
     public $role;
 
     public function  __construct()
     {
-        self::$db = MyiDB::getInstance()->getConnection();
-    }
-
-    private function del_gaps($arr)
-    {
-        return trim($arr);
-    }
-
-    private function del_tags($arr)
-    {
-        return strip_tags($arr);
+        $this->database = new DataBase();
     }
 
     public function setR($arr)
@@ -54,61 +44,41 @@ class Role
     public function getRoles($tbl_name)
     {
         $sql = "SELECT * FROM $tbl_name ORDER BY id";
-        $result = mysqli_query(self::$db, $sql);
-        if (!$result) {
-            return false;
-        } else {
-            $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
-            return $row;
-        }
+         $this->database->execute($sql);
+        $row = $this->database->fetchAll();
+        return $row;
     }
 
     public function postRole($table, $role)
     {
-        $role = $this->del_gaps($role);
-        $role = $this->del_tags($role);
-        $role = mysqli_escape_string(self::$db, $role);
-        $sql = mysqli_query(self::$db, "INSERT INTO $table (`role`)
-VALUES ('$role')");
-        if ($sql) {
-            return '<center>Данные успешно сохранены</center>';
-        } else {
-            return '<center>Данные не сохранены</center>';
-        }
+        $sql ="INSERT INTO $table (`role`)
+VALUES ('" . $this->database->escape($role) . "')";
+        $this->database->execute($sql);
+        return '<center>Данные успешно сохранены</center>';
     }
 
     public function putRole($table, $id, $role)
     {
-        $role = $this->del_gaps($role);
-        $role = $this->del_tags($role);
-        $role = mysqli_escape_string(self::$db, $role);
-        $sql = mysqli_query(self::$db, "UPDATE $table SET role='$role' WHERE id='$id'");
-        if ($sql) {
-            return '<center>Данные успешно обновлены</center>';
-        } else {
-            return '<center>Данные не обновлены</center>';
-        }
+        $sql = "UPDATE $table SET role='" . $this->database->escape($role) . "' WHERE id='$id'";
+        $this->database->execute($sql);
+        return '<center>Данные успешно обновлены</center>';
     }
 
     public function deleteRole($table, $id)
     {
-        return $sql = mysqli_query(self::$db, "DELETE FROM $table WHERE id=$id");
+         $sql = "DELETE FROM $table WHERE id=$id";
+         $this->database->execute($sql);
+        return true;
     }
 
     public function getUsersByRole($tbl_name, $id)
     {
         $sql = "SELECT `user` FROM $tbl_name WHERE id='$id'";
-        $result = mysqli_query(self::$db, $sql);
-        if (!$result) {
-            return false;
-        } else {
-            $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
-            return $row;
-        }
-    }
-
-    public function close()
-    {
-        return mysqli_close(self::$db);
+       $this->database->execute($sql);
+        $row = $this->database->fetchAll();
+        return $row;
     }
 }
+//
+//$role=new Role();
+//$role->getRoles('role');

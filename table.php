@@ -41,11 +41,11 @@ if (isset($_GET['del']) && !empty($_GET['del'])) {
     </tr>
     <?php
         foreach ($r as $val) {
-            echo '<tr><td>' . $val['role'] .
-                '<a href="edit.php?edit=' . $val['id'] . '&role=' . $val['role'] . '">
+            echo '<tr><td>' . $val[1] .
+                '<a href="edit.php?edit=' . $val[0] . '&role=' . $val[1] . '">
             <img src="icon/redact.jpg" alt="Редактировать роль" title="Редактировать роль" style="float:right" width="20">
             </a>
-        <a href="table.php?del=' . $val['id'] . '">
+        <a href="table.php?del=' . $val[0] . '">
         <img src="icon/delete.jpg" alt="Удалить роль" title="Удалить роль" style="float:right" width="20">
         </a></td></tr>';
         }
