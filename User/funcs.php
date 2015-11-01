@@ -1,6 +1,5 @@
 <?php
-include "DataBase.php";
-
+include_once "../_autoload.php";
 /**
  *
  */

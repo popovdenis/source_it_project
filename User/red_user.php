@@ -1,5 +1,6 @@
 <?php
-include 'funcs.php';
+include_once "../_autoload.php";
+include BASE_DIR . 'user/funcs.php';
 session_start();
 if (isset($_SESSION['user']) and !empty($_SESSION['user'])) {
     $id = $_SESSION['user'][0];

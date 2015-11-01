@@ -1,5 +1,6 @@
 <?php
-include 'funcs.php';
+include_once "../_autoload.php";
+include BASE_DIR . 'user/funcs.php';
 $users = new User();
 session_start();
 if (isset($_GET['sort'])) {
@@ -38,8 +39,6 @@ if (isset($_GET['deluser']) and !empty($_GET['deluser'])) {
 <html>
 <head>
     <title>Список пользователей</title>
-    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="js/jquery-1.11.3.js"></script>
     <style type="text/css">
         .wait-bar {
             position: absolute;
