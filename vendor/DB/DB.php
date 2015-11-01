@@ -14,25 +14,28 @@ trait DB
 
     private function __construct()
     {
-        $config = Config::getConfig();
-        if (empty($config)) {
-            throw new Exception('Config file does no exist');
-        }
-        $mysql = mysqli_init();
-        $mysql->options(MYSQLI_OPT_CONNECT_TIMEOUT, 10);
+        try {
+            $config = Config::getConfig();
 
-        $connection = $mysql->real_connect(
-            $config['host'],
-            $config['username'],
-            $config['password']
-        );
-        if (!$connection) {
-            throw new Exception('No database connection');
+            $mysql = mysqli_init();
+            $mysql->options(MYSQLI_OPT_CONNECT_TIMEOUT, 10);
+
+            $connection = $mysql->real_connect(
+                $config['host'],
+                $config['username'],
+                $config['password']
+            );
+            if (!$connection) {
+                throw new Exception('No database connection');
+            }
+            if (!$mysql->select_db($config['database'])) {
+                throw new Exception('Database is not selected');
+            }
+            $this->connection = $mysql;
+
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
         }
-        if (!$mysql->select_db($config['database'])) {
-            throw new Exception('Database is not selected');
-        }
-        $this->connection = $mysql;
     }
 
     private function __clone() {}
