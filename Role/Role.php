@@ -41,7 +41,13 @@ class Role
 
     public function getRoles($tbl_name)
     {
-        $sql = "SELECT * FROM $tbl_name ORDER BY id";
+        $sql = "SELECT * FROM $tbl_name";
+        if (isset($options['order_by'])) {
+            $sql .= " ORDER BY id" . $this->database->escape($options['order_by']);
+            if (isset($options['order_as'])) {
+                $sql .= "ORDER BY DESC id" . $this->database->escape($options['order_as']);
+            }
+        }
          $this->database->execute($sql);
         $row = $this->database->fetchAll();
         return $row;
@@ -52,14 +58,14 @@ class Role
         $sql ="INSERT INTO $table (`role`)
 VALUES ('" . $this->database->escape($role) . "')";
         $this->database->execute($sql);
-        return '<center>Данные успешно сохранены</center>';
+        return 'Данные успешно сохранены';
     }
 
     public function putRole($table, $id, $role)
     {
         $sql = "UPDATE $table SET role='" . $this->database->escape($role) . "' WHERE id='$id'";
         $this->database->execute($sql);
-        return '<center>Данные успешно обновлены</center>';
+        return 'Данные успешно обновлены';
     }
 
     public function deleteRole($table, $id)
