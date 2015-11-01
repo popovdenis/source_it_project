@@ -1,5 +1,4 @@
 <?php
-
 define("BASE_DIR", __DIR__ . '/');
 
 include_once BASE_DIR . 'vendor/bootstrap.php';
