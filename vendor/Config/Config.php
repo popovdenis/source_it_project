@@ -7,7 +7,7 @@ class Config
         if (file_exists($path_to_file)) {
             return parse_ini_file($path_to_file);
         } else {
-            return null;
+            throw new Exception('Создайте файл конфигурации config.ini');
         }
     }
 }
