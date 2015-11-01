@@ -1,4 +1,4 @@
-base_url = lessons/source_it_project/
+base_url = mysite/source_it_project/
 host = localhost
 username = root
 password = root
