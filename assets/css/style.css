@@ -1,0 +1,21 @@
+.wpr30 { width: 30%;  }
+.wpr10 { width: 10%;  }
+
+.align-c {
+    text-align: center;
+}
+.mr10 {margin-right: 10px;}
+.link-a {
+    color: #ffffff;
+    text-decoration: none;
+}
+.link-a:hover {
+    color: #ffffff;
+}
+.logo-title {
+    color: #FFFFFF !important;
+    font-size: 21px;
+}
+.container-header {
+    margin-bottom: 35px;
+}

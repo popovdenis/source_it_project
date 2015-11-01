@@ -16,8 +16,6 @@
  * deleteRole ­ удалить роль
  * getUsersByRole ­ получение списка пользователей по роли
  */
-include_once "DataBase.php";
-
 class Role
 {
     /**
