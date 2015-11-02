@@ -38,18 +38,18 @@ class Role
         $this->role;
     }
 
-    public function getRoles($tbl_name,$options)
+    public function getRoles($tbl_name,$options,$as)
     {
         $sql = "SELECT * FROM $tbl_name";
-        if (isset($options['order_by'])) {
-            $sql .= " ORDER BY" . $this->database->escape($options['order_by']);
-            if (isset($options['order_as'])) {
-                $sql .= " " . $this->database->escape($options['order_as']);
+        if (isset($options)) {
+            $sql .= " ORDER BY " . $this->database->escape($options);
+            if (isset($as)) {
+                $sql .= " " . $this->database->escape($as);
             }
         }
          $this->database->execute($sql);
         $row = $this->database->fetchAll();
-        var_dump($row);
+       return $row;
     }
 
     public function postRole($table, $role)

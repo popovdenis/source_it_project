@@ -46,7 +46,7 @@ if (isset($_POST['action'])) {
                                 <label for="role">Role name</label>
                                 <input type="text" class="form-control" name="role" placeholder="Enter role name" />
                             </div>
-                            <button type="submit" class="btn btn-default">Submit</button>
+                            <button type="submit" class="btn btn-default">Save</button>
                         </form>
                     </div>
                 </div>

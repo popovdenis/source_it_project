@@ -18,18 +18,26 @@ if (!empty($_POST['f_name']) and !empty($_POST['l_name']) and
     }
     // $user->deleteUser('localhost', 'root', '', 'new_user_db', 'qaweeds@gmail.com');
 }
-?>
-
+include_once BASE_DIR . "header.php" ?>
+<body>
+<!-- HEADER END-->
+<?php require_once BASE_DIR . "header-logo-bar.php"; ?>
+<!-- LOGO HEADER END-->
+<?php require_once BASE_DIR . "header-menu.php"; ?>
+<!-- MENU SECTION END-->
 <!DOCTYPE html>
 <html>
 <head>
     <title>Add new user</title>
 </head>
 <body>
+<div class="content-wrapper">
+    <div class="container">
+        <div class="row">
 <a href="users.php">К списку пользователей</a>
 
 <form name="add_form" action="" method="post">
-    <h2>Введите данные дял добавления</h2>
+    <h2>Введите данные для добавления</h2>
 
     <p>* - required fields</p>
 
@@ -57,5 +65,10 @@ if (isset($res)) {
 }
 
 ?>
+        </div>
+    </div>
+</div>
+<!-- CONTENT-WRAPPER SECTION END-->
+<?php require_once BASE_DIR . "footer.php"; ?>
 </body>
 </html>

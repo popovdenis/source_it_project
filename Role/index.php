@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Denis
- * Date: 30.10.2015
- * Time: 20:47
- */
 include_once "../_autoload.php";
 include BASE_DIR . "role/Role.php";
 
@@ -37,29 +31,32 @@ if (isset($_GET['del']) && !empty($_GET['del'])) {
                         <table class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th class="wpr10 align-c">
+                                <th class="wpr10 align-c">#</th>
+                                <th class="align-c">
                                     <?php
-                                    if (isset($_GET['order_by']) && !empty($_GET['order_by'])) {
+                                    if (isset($_GET['order_as']) && !empty($_GET['order_as'])) {
+                                        $r=$roleObj->getRoles('role', 'role','asc');
                                         ?>
-                                        <a href="index.php?order_by=<?php $roleObj->getRoles('role', 0);?>">#</a>
+                                        <a href="index.php?order_by=3" style="float:left"><i class="fa fa-venus"></i></a>
                                     <?php
                                     }else{
-                                    ?>
-                                    <a href="index.php?order_as=<?php $roleObj->getRoles('role',0);?>">#</a>
+                                        $r=$roleObj->getRoles('role','role','desc');
+                                        ?>
+                                        <a href="index.php?order_as=4" style="float:left"><i class="fa fa-mars-stroke-v"></i></a>
                                     <?php
                                     }
                                     ?>
+                                    Role
                                 </th>
-                                <th class="align-c">Role</th>
                                 <th class="wpr30 align-c">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-<?php
-foreach ($roleObj->getRoles('role', 0) as $index => $role) {
+                            <?php
+foreach ($r as $index => $role) {
 ?>
                             <tr>
-                                <td class="align-c"><?php echo ++$index ?></td>
+                                <td class="align-c"><?php echo ++$index?></td>
                                 <td><?php echo $role[1] ?></td>
                                 <td class="align-c">
                                     <a class="btn btn-primary mr10"

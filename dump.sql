@@ -1,5 +1,5 @@
 CREATE DATABASE source_it_project;
-USE source_it_project;
+USE progect;
 
 CREATE TABLE role(
   `id` INT(5) PRIMARY KEY AUTO_INCREMENT,
