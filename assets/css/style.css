@@ -34,8 +34,13 @@
 }
 .btn_del{
 	color: #fff;
-    background-color: red;
-    border-color: red;
+    background-color: #FF0000;
+    border-color: #CA0000;
+}
+.btn_del:hover{
+    color: #fff;
+    background-color: #A90707;
+    border-color: #C04343;
 }
 .wpr7{
     width: 5%;
