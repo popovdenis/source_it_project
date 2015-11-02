@@ -35,8 +35,8 @@ if (isset($_GET['deluser']) and !empty($_GET['deluser'])) {
     header("Location: users.php");
 }
 ?>
-<!DOCTYPE html>
-<html>
+<!-- <!DOCTYPE html> -->
+<!-- <html>
 <head>
     <title>Список пользователей</title>
     <script type="text/javascript" src="../assets/js/jquery-1.11.1.js"></script>
@@ -45,7 +45,13 @@ if (isset($_GET['deluser']) and !empty($_GET['deluser'])) {
           href="../assets/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css">
 </head>
+<body> -->
+<?php include_once BASE_DIR . "header.php" ?>
 <body>
+<!-- HEADER END-->
+<?php require_once BASE_DIR . "header-logo-bar.php"; ?>
+<!-- LOGO HEADER END-->
+<?php require_once BASE_DIR . "header-menu.php"; ?>
 <div class="content-wrapper">
     <div class="container">
         <div class='wait-bar'></div>
@@ -110,7 +116,5 @@ if (isset($_GET['deluser']) and !empty($_GET['deluser'])) {
         </div>
     </div>
 </div>
-</body>
-</html>
-<script type="text/javascript" src="../assets/js/users.js"></script>
+<?php require_once BASE_DIR . "footer.php"; ?>
 
