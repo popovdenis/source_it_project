@@ -1,4 +1,5 @@
 <?php
+
 class Config
 {
     public static function getConfig()
@@ -11,4 +12,3 @@ class Config
         }
     }
 }
-

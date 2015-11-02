@@ -37,14 +37,26 @@ if (isset($_GET['del']) && !empty($_GET['del'])) {
                         <table class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th class="wpr10 align-c">#</th>
+                                <th class="wpr10 align-c">
+                                    <?php
+                                    if (isset($_GET['order_by']) && !empty($_GET['order_by'])) {
+                                        ?>
+                                        <a href="index.php?order_by=<?php $roleObj->getRoles('role', 0);?>">#</a>
+                                    <?php
+                                    }else{
+                                    ?>
+                                    <a href="index.php?order_as=<?php $roleObj->getRoles('role',0);?>">#</a>
+                                    <?php
+                                    }
+                                    ?>
+                                </th>
                                 <th class="align-c">Role</th>
                                 <th class="wpr30 align-c">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
 <?php
-foreach ($roleObj->getRoles('role') as $index => $role) {
+foreach ($roleObj->getRoles('role', 0) as $index => $role) {
 ?>
                             <tr>
                                 <td class="align-c"><?php echo ++$index ?></td>

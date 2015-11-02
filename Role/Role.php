@@ -1,5 +1,4 @@
 <?php
-
 /**
  * 1. Создать класс Role
  * a. DB таблица role.
@@ -39,18 +38,18 @@ class Role
         $this->role;
     }
 
-    public function getRoles($tbl_name)
+    public function getRoles($tbl_name,$options)
     {
         $sql = "SELECT * FROM $tbl_name";
         if (isset($options['order_by'])) {
-            $sql .= " ORDER BY id" . $this->database->escape($options['order_by']);
+            $sql .= " ORDER BY" . $this->database->escape($options['order_by']);
             if (isset($options['order_as'])) {
-                $sql .= "ORDER BY DESC id" . $this->database->escape($options['order_as']);
+                $sql .= " " . $this->database->escape($options['order_as']);
             }
         }
          $this->database->execute($sql);
         $row = $this->database->fetchAll();
-        return $row;
+        var_dump($row);
     }
 
     public function postRole($table, $role)
@@ -83,6 +82,3 @@ VALUES ('" . $this->database->escape($role) . "')";
         return $row;
     }
 }
-//
-//$role=new Role();
-//$role->getRoles('role');
