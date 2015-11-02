@@ -16,7 +16,7 @@ include_once("defines.php");
     <div class="nav-wrapper  red lighten-2">
         <a href="#" class="brand-logo right">Online-test</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <li><a href="startTest/index.php">На главную</a></li>
+            <li><a href="startTestTable/index.php">На главную</a></li>
         </ul>
     </div>
 </nav>
