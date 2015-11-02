@@ -17,6 +17,18 @@ include_once BASE_DIR . "header.php" ?>
                     <li><a href="http://vk.com/"><i class="fa fa-vk"></i> Vk</a></li>
                 </h3>
             </ul>
+            <p><br><h3>
+                <ol>
+                Авторы:
+                <li>Гутенев Богдан</li>
+                <li>Здоровцова Анжела</li>
+                <li>Осташевская Мария</li>
+                <li>Павел Опалев</li>
+                <li>Попов Денис</li>
+                <li>Усенко Артем</li>
+                <li>Александр</li>
+            </ol>
+            </h3></br></p>
         </div>
     </div>
 </div>
