@@ -19,3 +19,21 @@
 .container-header {
     margin-bottom: 35px;
 }
+.wait-bar {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 64px;
+    height: 64px;
+}
+.add_bg{
+	background-image: url("../icon/load.gif");
+}
+.add_link{
+	margin: 0 0 10px 15px !important;
+}
+.btn_del{
+	color: #fff;
+    background-color: red;
+    border-color: red;
+}

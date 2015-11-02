@@ -39,80 +39,53 @@ if (isset($_GET['deluser']) and !empty($_GET['deluser'])) {
 <html>
 <head>
     <title>Список пользователей</title>
-    <style type="text/css">
-        .wait-bar {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: 64px;
-            height: 64px;
-        }
-    </style>
+    <script type="text/javascript" src="../assets/js/jquery-1.11.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css">
 </head>
-<body>
-<div class='content'>
+<div class="content-wrapper">
+<div class="container">
     <div class='wait-bar'></div>
-    <a href="index.php">Добавить нового пользователя</a>
-    <table border="1" width="100%">
+    <div class="row">
+            <div class="pull-left">
+                <a class="btn btn-default add_link" href="index.php"><i class="fa fa-pencil"></i>Добавить нового пользователя</a>
+            </div>
+        </div>
+    <table class="table table-striped table-bordered table-hover users_table">
         <tr>
-            <th onclick="location.href='?sort=0'">ID</th>
-            <th onclick="location.href='?sort=1'">Name</th>
-            <th onclick="location.href='?sort=2'">Last Name</th>
-            <th onclick="location.href='?sort=3'">Email</th>
-            <th onclick="location.href='?sort=4'">Phone</th>
-            <th onclick="location.href='?sort=5'">Created at</th>
-            <th>Action</th>
+            <th class="wpr10 align-c" onclick="location.href='?sort=0'">ID</th>
+            <th class="align-c" onclick="location.href='?sort=1'">Name</th>
+            <th class="align-c" onclick="location.href='?sort=2'">Last Name</th>
+            <th class="align-c" onclick="location.href='?sort=3'">Email</th>
+            <th class="align-c" onclick="location.href='?sort=4'">Phone</th>
+            <th class="align-c" onclick="location.href='?sort=5'">Created at</th>
+            <th class="align-c">Action</th>
         </tr>
         <?php
         foreach ($res as $value) {
             ?>
             <tr>
-                <td><?= $value['id'] ?></td>
-                <td><?= $value['firstname'] ?></td>
-                <td><?= $value['lastname'] ?></td>
-                <td><?= $value['email'] ?></td>
-                <td><?= $value['phone'] ?></td>
-                <td><?= $value['created_at'] ?></td>
-                <td>
-                    <a href="?deluser='<?= $value['id'] ?>'"
-                       style="display: block;">Удалить</a>
-                    <a href="?reduser='<?= $value['id'] ?>'"
-                       style="display: block;">Редактировать</a>
+                <td ><?= $value['id'] ?></td>
+                <td ><?= $value['firstname'] ?></td>
+                <td ><?= $value['lastname'] ?></td>
+                <td ><?= $value['email'] ?></td>
+                <td ><?= $value['phone'] ?></td>
+                <td ><?= $value['created_at'] ?></td>
+                <td class="align-c">
+                    <a class="btn btn_del mr10" href="?deluser='<?= $value['id'] ?>'"
+                       >Удалить</a>
+                    <a class="btn btn-primary mr10" href="?reduser='<?= $value['id'] ?>'"
+                        >Редактировать</a>
                 </td>
             </tr>
         <?php
         }
         ?>
     </table>
+    </div>
 </div>
-</body>
+<?php require_once BASE_DIR . "footer.php"; ?>
 </html>
-<script type="text/javascript">
+<script type="text/javascript" src="../assets/js/users.js"></script>
 
-    $('table').find('a').click(function (event) {
-        $q = $(this).attr('href');
-        if (!$q.indexOf('?deluser')) {
-            event.preventDefault();
-            $url = "users.php" + $q;
-            if (confirm('Вы собираетесь удалить пользователя. Подтвердите действие.')) {
-                $.ajax({
-                    url: $url,
-                    beforeSend: function () {
-                        $('.wait-bar').css('background-image', 'url(./images/load.gif)');
-                    },
-                    error: function () {
-                        alert('AJAX ERROR');
-                    },
-                    success: function (data) {
-                        $('.wait-bar').css('background-image', 'none');
-                        $('body').html(data);
-                    }
-                });
-            }
-        } else {
-            console.log('red');
-        }
-    })
-
-
-</script>
