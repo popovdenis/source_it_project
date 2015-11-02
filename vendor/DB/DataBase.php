@@ -37,9 +37,3 @@ class DataBase
     }
 
 }
-
-//$database=new DataBase();
-//$database->execute('SELECT * FROM news');
-//echo "<pre>";
-//    var_dump( $database->fetchAll() );
-//echo "</pre>";
