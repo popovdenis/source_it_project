@@ -47,8 +47,8 @@ if (isset($_GET['del']) && !empty($_GET['del'])) {
                                     }
                                    ($roleObj->getRoles('role', [$orderby,$orderas]));
                                     ?>
-                                    <a href="index.php?order_by=<?php echo $orderby ?>&order_as=<?php echo $orderas ?>">Role</a>
-                                </th>
+                                    <a href="index.php?order_by=<?php echo $orderby ?>&order_as=<?php echo $orderas ?>"><i class="fa fa-sort"></i></a>
+                                    Role</th>
                                 <th class="wpr30 align-c">Actions</th>
                             </tr>
                             </thead>
