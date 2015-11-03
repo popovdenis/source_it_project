@@ -38,13 +38,13 @@ class Role
         $this->role;
     }
 
-    public function getRoles($tbl_name,$options,$as)
+    public function getRoles($tbl_name,$options = array())
     {
         $sql = "SELECT * FROM $tbl_name";
-        if (isset($options)) {
-            $sql .= " ORDER BY " . $this->database->escape($options);
-            if (isset($as)) {
-                $sql .= " " . $this->database->escape($as);
+        if (isset($options[0])) {
+            $sql .= " ORDER BY " . $this->database->escape($options[0]);
+            if (isset($options[1])) {
+                $sql .= " " . $this->database->escape($options[1]);
             }
         }
          $this->database->execute($sql);

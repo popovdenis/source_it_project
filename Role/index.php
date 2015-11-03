@@ -34,42 +34,43 @@ if (isset($_GET['del']) && !empty($_GET['del'])) {
                                 <th class="wpr10 align-c">#</th>
                                 <th class="align-c">
                                     <?php
-                                    if (isset($_GET['order_as']) && !empty($_GET['order_as'])) {
-                                        $r=$roleObj->getRoles('role', 'role','asc');
-                                        ?>
-                                        <a href="index.php?order_by=3" style="float:left"><i class="fa fa-venus"></i></a>
-                                    <?php
-                                    }else{
-                                        $r=$roleObj->getRoles('role','role','desc');
-                                        ?>
-                                        <a href="index.php?order_as=4" style="float:left"><i class="fa fa-mars-stroke-v"></i></a>
-                                    <?php
+                                    $orderby = "role";
+                                    $orderas = "ASC";
+                                    if (isset ($_GET['order_by']) && isset($_GET['order_as'])) {
+                                        $orderby = $_GET['order_by'];
+                                        $orderas = $_GET['order_as'];
+                                        if ($orderas == 'ASC'){
+                                            $orderas = 'DESC';
+                                        }else{
+                                            $orderas = "ASC";
+                                        }
                                     }
+                                   ($roleObj->getRoles('role', [$orderby,$orderas]));
                                     ?>
-                                    Role
+                                    <a href="index.php?order_by=<?php echo $orderby ?>&order_as=<?php echo $orderas ?>">Role</a>
                                 </th>
                                 <th class="wpr30 align-c">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             <?php
-foreach ($r as $index => $role) {
-?>
-                            <tr>
-                                <td class="align-c"><?php echo ++$index?></td>
-                                <td><?php echo $role[1] ?></td>
-                                <td class="align-c">
-                                    <a class="btn btn-primary mr10"
-                                       href="edit-role.php?edit=<?php echo $role[0] ?>&role=<?php echo $role[1] ?>">
-                                        <i class="fa fa-edit "></i>
-                                        Edit
-                                    </a>
-                                    <a class="btn btn-danger" href="index.php?del=<?php echo $role[0] ?>">
-                                        <i class="fa fa-pencil"></i> Delete
-                                    </a>
-                                </td>
-                            </tr>
-<?php } ?>
+                            foreach ($roleObj->getRoles('role', [$orderby,$orderas]) as $index => $role) {
+                                ?>
+                                <tr>
+                                    <td class="align-c"><?php echo ++$index ?></td>
+                                    <td><?php echo $role[1] ?></td>
+                                    <td class="align-c">
+                                        <a class="btn btn-primary mr10"
+                                           href="edit-role.php?edit=<?php echo $role[0] ?>&role=<?php echo $role[1] ?>">
+                                            <i class="fa fa-edit "></i>
+                                            Edit
+                                        </a>
+                                        <a class="btn btn-danger" href="index.php?del=<?php echo $role[0] ?>">
+                                            <i class="fa fa-pencil"></i> Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
                             </tbody>
                         </table>
                     </div>
