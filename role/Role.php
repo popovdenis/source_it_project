@@ -76,7 +76,7 @@ VALUES ('" . $this->database->escape($role) . "')";
 
     public function getUsersByRole($tbl_name, $id)
     {
-        $sql = "SELECT `user` FROM $tbl_name WHERE id='$id'";
+        $sql = "SELECT * FROM $tbl_name WHERE id='$id'";
        $this->database->execute($sql);
         $row = $this->database->fetchAll();
         return $row;
