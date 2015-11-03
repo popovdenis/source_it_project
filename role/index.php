@@ -19,6 +19,11 @@ if (isset($_GET['del']) && !empty($_GET['del'])) {
     <div class="container">
         <div class="row">
             <div class="pull-right">
+                <a class="btn btn-default" href="user-role.php">
+                    <i class="fa fa-angellist"></i>User Role
+                </a>
+            </div>
+            <div class="pull-right">
                 <a class="btn btn-default" href="new-role.php">
                     <i class="fa fa-pencil"></i> New Role
                 </a>

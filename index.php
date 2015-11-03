@@ -25,7 +25,7 @@ include_once "_autoload.php";
                     </div>
                 </div>
                 <h5>
-                    <a class="link-a" href="<?php echo BASE_URL ?>role/">Roles</a>
+                    <a class="link-a" href="<?php echo BASE_URL ?>user/">Users</a>
                 </h5>
             </div>
         </div>
@@ -38,7 +38,7 @@ include_once "_autoload.php";
                     </div>
                 </div>
                 <h5>
-                    <a class="link-a" href="<?php echo BASE_URL ?>user/">Users</a>
+                    <a class="link-a" href="<?php echo BASE_URL ?>role/">Roles</a>
                 </h5>
             </div>
         </div>

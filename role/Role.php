@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 1. Создать класс Role
  * a. DB таблица role.
@@ -38,7 +39,7 @@ class Role
         $this->role;
     }
 
-    public function getRoles($tbl_name,$options = array())
+    public function getRoles($tbl_name, $options = array())
     {
         $sql = "SELECT * FROM $tbl_name";
         if (isset($options[0])) {
@@ -47,14 +48,14 @@ class Role
                 $sql .= " " . $this->database->escape($options[1]);
             }
         }
-         $this->database->execute($sql);
+        $this->database->execute($sql);
         $row = $this->database->fetchAll();
-       return $row;
+        return $row;
     }
 
     public function postRole($table, $role)
     {
-        $sql ="INSERT INTO $table (`role`)
+        $sql = "INSERT INTO $table (`role`)
 VALUES ('" . $this->database->escape($role) . "')";
         $this->database->execute($sql);
         return 'Данные успешно сохранены';
@@ -69,15 +70,17 @@ VALUES ('" . $this->database->escape($role) . "')";
 
     public function deleteRole($table, $id)
     {
-         $sql = "DELETE FROM $table WHERE id=$id";
-         $this->database->execute($sql);
+        $sql = "DELETE FROM $table WHERE id=$id";
+        $this->database->execute($sql);
         return true;
     }
 
-    public function getUsersByRole($tbl_name, $id)
+    public function getUsersByRole()
     {
-        $sql = "SELECT * FROM $tbl_name WHERE id='$id'";
-       $this->database->execute($sql);
+        $sql = "SELECT u.firstname FROM user as u
+  INNER JOIN user_role ur ON u.id=ur.user_id
+  INNER JOIN role r ON r.id=ur.role_id;";
+        $this->database->execute($sql);
         $row = $this->database->fetchAll();
         return $row;
     }
