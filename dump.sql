@@ -1,4 +1,5 @@
 CREATE DATABASE source_it_project;
+
 USE progect;
 
 CREATE TABLE role (
@@ -21,3 +22,25 @@ CREATE TABLE user_role (
 `user_id` INT(5) NOT NULL,
 `role_id` INT(5) NOT NULL
 );
+
+ALTER TABLE user_role
+    ADD CONSTRAINT fk_user
+FOREIGN KEY (`user_id`)
+      REFERENCES user(`id`)
+ON UPDATE CASCADE
+ON DELETE CASCADE
+;
+
+ALTER TABLE user_role
+    ADD CONSTRAINT fk_role
+FOREIGN KEY (`role_id`)
+      REFERENCES role(`id`)
+ON UPDATE CASCADE
+ON DELETE CASCADE
+;
+
+SELECT u.firstname,r.role FROM user_role ur
+  JOIN user u ON ur.user_id=u.id
+  JOIN role r ON ur.role_id=r.id;
+
+

@@ -1,7 +1,9 @@
 <?php
 include_once "../_autoload.php";
 include BASE_DIR . "role/Role.php";
+include BASE_DIR . "user/funcs.php";
 $roleObj = new Role();
+$userObj = new User();
 ?>
 <?php include_once BASE_DIR . "header.php" ?>
 <body>
@@ -14,30 +16,45 @@ $roleObj = new Role();
     <div class="container">
         <div class="row">
             <div class="col-md-7">
-                <div class="panel panel-default">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th class="wpr10 align-c">#</th>
-                                <th class="align-c">User</th>
-                                <th class="align-c">Role</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php
-                            foreach ($roleObj->getUsersByRole() as $index => $user) {
-                                ?>
-                                <tr>
-                                    <td class="align-c"><?php echo ++$index ?></td>
-                                    <td><?php echo $user[1] ?></td>
-                                    <td class="align-c"><?php echo $user[1] ?></td>
-                                </tr>
-                            <?php } ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                <form action="" method="post">
+                    <label>User</label>
+                    <select name="user" size="1"><br>
+                        <?php
+                        foreach ($userObj->getUsers() as $index => $user) {
+                            ?>
+                            <option
+                                value="<?php echo $user['firstname'] . " " . $user['lastname'] ?>"><?php echo $user['firstname'] . " " . $user['lastname'] ?></option>
+                            <br>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                    <label>Role</label>
+                    <select name="role[]" size="3" multiple><br>
+                        <?php
+                        foreach ($roleObj->getRoles('role') as $index => $role) {
+                            ?>
+                            <option value="<?php echo $role[1] ?>"><?php echo $role[1] ?></option>
+                            <br>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                    <input type="submit" value="Save">
+                </form>
+                <?php
+                if (isset($_POST['role']) && isset($_POST['user'])) {
+                    foreach ($userObj->getUsers() as $u) {
+                        if ($u['firstname']." ".$u['lastname'] == $_POST['user']) {
+                            foreach ($roleObj->getRoles('role') as $r) {
+                                if (array ($r[1]) == $_POST['role']) {
+                                    echo '<div class="alert alert-success">' .$roleObj->setUsersByRole($u['id'],$r[0]). '</div>';
+                                }
+                            }
+                        }
+                    }
+                }
+                ?>
             </div>
         </div>
     </div>
