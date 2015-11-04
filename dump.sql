@@ -39,8 +39,4 @@ ON UPDATE CASCADE
 ON DELETE CASCADE
 ;
 
-SELECT u.firstname,r.role FROM user_role ur
-  JOIN user u ON ur.user_id=u.id
-  JOIN role r ON ur.role_id=r.id;
-
 
