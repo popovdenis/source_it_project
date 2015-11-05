@@ -26,7 +26,7 @@
     if (!isset($_POST['test'])) {
         $title = 'Пройдите тест!';
     } else {
-        header('Location: quiz.php');
+        header('Location: ../startTestSession/quiz.php');
     }
     ?>
     <h3 class=' cyan-text text-darken-3 '><?php echo $title; ?></h3>
@@ -34,7 +34,7 @@
     <form action="index.php" method="post">
         <input type="hidden" name="test">
          <button class='waves-effect waves-teal btn-large' type='submit'>
-            <i class='material-icons left large'>done_all</i> Начать тест
+            <i class='material-icons center '>play_circle_outline</i> Начать тест
         </button>
 
     </form>

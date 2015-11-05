@@ -15,7 +15,7 @@
     <div class="nav-wrapper red lighten-1">
         <a href="#" class="brand-logo right">Online-test</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <li><a href="/startTestTable/index.php">На главную</a></li>
+            <li><a href="/startTestSession/index.php">На главную</a></li>
         </ul>
     </div>
 </nav>
@@ -111,7 +111,7 @@
             Если хочешь добавить вопрос в тест, жми сюда=)
         </a>
         <a class='  collection-item cyan-text text-darken-1 red lighten-5 waves-effect waves-teal'
-           href="startTestTable/index.php">
+           href="startTestSession/index.php">
             <i class='material-icons left'>replay</i>
             Начать тест!
         </a>

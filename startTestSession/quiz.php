@@ -24,11 +24,12 @@
 
     header("Content-type: text/html; charset=utf-8");
     include_once("../defines.php");
-    require_once BASE_DIR ."/dao/ImplQuestionDao.php";
+    require_once BASE_DIR . "/dao/ImplQuestionDao.php";
     require_once BASE_DIR . "/dao/ImplAnswerDao.php";
     $questionDao = new QuestionDaoImpl();
     $answerDao = new AnswerDaoImpl();
 
+    session_set_cookie_params(7200);
     session_start();
 
     $questions = $questionDao->getAllQuestions();
@@ -38,7 +39,7 @@
 
     $answer = $_POST['answer'];
 
-//            unset($_SESSION['answers']);
+    //            unset($_SESSION['answers']);
     if (!isset($_SESSION['answers'])) {
 
         $_SESSION['answers'] = [];
@@ -53,27 +54,30 @@
         header('Location: result.php');
 
     }
-//    echo $questionsCounter;
     $title = $questions[$questionsCounter];
-    ?>
-    <h5 class=' cyan-text text-darken-3 '><?php echo $title->getQuestion(); ?></h5>
+
+    $countQuestions = count($questionDao->getAllQuestions());//колличество вопросов
+    $countTest = round(($questionsCounter * 100) / $countQuestions); ?>
+
+    <p class='cyan-text text-darken-2 right'><b>Пройдено <?php echo $countTest; ?> %</b></p>
+
+    <br><br><h5 class=' cyan-text text-darken-3 '><?php echo $title->getQuestion(); ?></h5>
 
     <form action="quiz.php" method="post">
-        <input type="hidden" name="q" value="<?php echo $questionsCounter; ?>">
+        <br><input type="hidden" name="q" value="<?php echo $questionsCounter; ?>">
         <?php foreach ($questionDao->getAnswersByQuestion($title->getId()) as $valAnswerByQuestion) {
 
             $countWrightAnswers++;
             $trueOrFalse = $answerDao->getTrueAnswer($valAnswerByQuestion->getId());
 
-            echo "<input type='checkbox' name = 'answer[]' value='$trueOrFalse' id='$countWrightAnswers'>";
+            echo "<br><input type='checkbox' name = 'answer[]' value='$trueOrFalse' id='$countWrightAnswers'>";
 
             echo "<label for='$countWrightAnswers'>";
             print $valAnswerByQuestion->getAnswer();
-            echo "<br>";
-            echo "</label><Br><Br>";
+            echo "<br></label><Br>";
 
         }
-        echo " <button class='waves-effect waves-teal btn-large' type='submit'>
+        echo " <Br><Br><button class='waves-effect waves-teal btn-large' type='submit'>
             <i class='material-icons left large'>done_all</i> Следующий вопрос
         </button></form>"; ?>
     </form>

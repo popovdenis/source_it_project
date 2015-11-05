@@ -14,7 +14,7 @@
     <div class="nav-wrapper red lighten-1">
         <a href="#" class="brand-logo right">Online-test</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <li><a href="index.php">На главную</a></li>
+            <li><a href="../startTestSession/index.php">На главную</a></li>
         </ul>
     </div>
 </nav>
@@ -36,7 +36,7 @@
     $countQuestions = count($questionDao->getAllQuestions());//колличество вопросов
     $countTrueAnswer = count($answerDao->getAllAnswers());//колличество правильных ответов
 
-//    print_r($_SESSION['answers']);
+    //    print_r($_SESSION['answers']);
 
     if (isset($_SESSION['answers'])) {
         foreach ($_SESSION['answers'] as $valArray) {
@@ -50,15 +50,20 @@
     unset($_SESSION['answers']);
     setcookie(session_name('answers'), '');
     ?>
-    <table>
-        <tr>
-            <td>
-                <h3 class=' cyan-text text-darken-3 '>Ваш результат: <?php echo $result ?> из <?php echo $countTrueAnswer ?>  </h3>
-            </td>
-        </tr>
-    </table>
-    <a href="index.php">Пройти тест ещё раз</a>
 
+    <h3 class=' cyan-text text-darken-3 center'>Ваш результат: <?php echo $result ?>
+        из <?php echo $countTrueAnswer ?>  </h3>
+
+    <div class="collection col l6">
+        <a class='  collection-item cyan-text text-darken-1 red lighten-5 waves-effect waves-teal' href="../view.php">
+            <i class='material-icons left'>input</i>
+            Если хочешь добавить вопрос в тест, жми сюда=)
+        </a>
+        <a class='  collection-item cyan-text text-darken-1 red lighten-5 waves-effect waves-teal' href="index.php">
+            <i class='material-icons left'>replay</i>
+            Начать тест заново!
+        </a>
+    </div>
 </div>
 </body>
 </html>
