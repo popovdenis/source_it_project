@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script type="text/javascript" src="../res/js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="../res/js/materialize.min.js"></script>
+
 </head>
 <body class="deep-orange lighten-5">
 
@@ -29,8 +30,10 @@
     $questionDao = new QuestionDaoImpl();
     $answerDao = new AnswerDaoImpl();
 
-    session_set_cookie_params(7200);
+    //    session_set_cookie_params(7200);
+    ini_set('session.gc_maxlifetime', 7200);
     session_start();
+
 
     $questions = $questionDao->getAllQuestions();
     //    print_r($questions);
@@ -77,9 +80,16 @@
             echo "<br></label><Br>";
 
         }
-        echo " <Br><Br><button class='waves-effect waves-teal btn-large' type='submit'>
+        if (($questionsCounter + 1) == $countQuestions) {
+            echo " <Br><Br><button class='waves-effect waves-teal btn-large' type='submit'>
+            <i class='material-icons left large'>done_all</i> Узнать результат
+        </button></form>";
+        } else {
+            echo " <Br><Br><button class='waves-effect waves-teal btn-large' type='submit'>
             <i class='material-icons left large'>done_all</i> Следующий вопрос
-        </button></form>"; ?>
+        </button></form>";
+        }
+        ?>
     </form>
 
 </div>
