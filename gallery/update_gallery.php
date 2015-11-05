@@ -13,7 +13,11 @@ $res = array();
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (empty($_POST['title']) or empty($_POST['description'])) {
-                echo 'Заполните все поля!';
+                echo '<div class="alert alert-danger">';
+                    echo '<ul>';
+                        echo '<li>Заполните все поля!</li>';
+                    echo '</ul>';
+                echo '</div>';
             } else {
                 $title = $database->escape($_POST['title']);
                 $desc = $database->escape($_POST['description']);

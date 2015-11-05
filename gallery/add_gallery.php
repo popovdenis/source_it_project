@@ -29,7 +29,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo '</div>';
         }
     } else {
-        echo 'Заполните все поля!';
+        echo '<div class="alert alert-danger">';
+            echo '<ul>';
+                echo '<li>Заполните все поля!</li>';
+            echo '</ul>';
+        echo '</div>';
     }
 }
 include_once BASE_DIR . "header.php";
