@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+CREATE TABLE gallery(
+  `id` INT(5) AUTO_INCREMENT PRIMARY KEY,
+  `title` VARCHAR(70) NOT NULL,
+  `description` VARCHAR(150) NOT NULL,
+  `created_at` DATETIME NOT NULL
+);
+=======
 CREATE DATABASE source_it_project;
 USE source_it_project;
 
@@ -16,3 +24,4 @@ CREATE TABLE user (
   `created_at` DATETIME
 );
 
+>>>>>>> dev
