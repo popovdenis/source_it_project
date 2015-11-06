@@ -13,8 +13,10 @@
                 <div class="navbar-collapse collapse ">
                     <ul id="menu-top" class="nav navbar-nav navbar-right">
                         <li><a href="<?php echo BASE_URL ?>">Dashboard</a></li>
-                        <li><a class="menu-top-active" href="<?php echo BASE_URL ?>role/">Roles</a></li>
-                        <li><a class="menu-top-active" href="<?php echo BASE_URL ?>user/">Users</a></li>
+<!-- class="menu-top-active"-->
+                        <li><a href="<?php echo BASE_URL ?>role/">Roles</a></li>
+                        <li><a href="<?php echo BASE_URL ?>user/">Users</a></li>
+                        <li><a href="<?php echo BASE_URL ?>gallery/">Gallery</a></li>
                     </ul>
                 </div>
             </div>
