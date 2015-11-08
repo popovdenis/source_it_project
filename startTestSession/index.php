@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script type="text/javascript" src="../res/js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="../res/js/materialize.min.js"></script>
+    <meta charset="utf-8" />
 </head>
 <body class="deep-orange lighten-5">
 
