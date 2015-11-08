@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 CREATE DATABASE source_it_project;
 
+=======
+CREATE DATABASE progect;
+>>>>>>> dev
 USE progect;
 
 CREATE TABLE role (
@@ -17,6 +21,7 @@ CREATE TABLE user (
   `created_at` DATETIME
 );
 
+<<<<<<< HEAD
 CREATE TABLE user_role (
 `id` INT(5) PRIMARY KEY auto_increment,
 `user_id` INT(5) NOT NULL,
@@ -40,3 +45,11 @@ ON DELETE CASCADE
 ;
 
 
+=======
+CREATE TABLE gallery(
+  `id` INT(5) AUTO_INCREMENT PRIMARY KEY,
+  `title` VARCHAR(70) NOT NULL,
+  `description` VARCHAR(150) NOT NULL,
+  `created_at` DATETIME NOT NULL
+);
+>>>>>>> dev
