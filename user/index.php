@@ -16,7 +16,6 @@ if (!empty($_POST['f_name']) and !empty($_POST['l_name']) and
     if ($res) {
         header("refresh:5;url=users.php");
     }
-    // $user->deleteUser('localhost', 'root', '', 'new_user_db', 'qaweeds@gmail.com');
 }
 ?>
 
