@@ -2,7 +2,7 @@ $('.users_table').find('a').click(function (event) {
         $q = $(this).attr('href');
         if (!$q.indexOf('?deluser')) {
             event.preventDefault();
-            $url = "users.php" + $q;
+            $url = "index.php" + $q;
             if (confirm('Вы собираетесь удалить пользователя. Подтвердите действие.')) {
                 $.ajax({
                     url: $url,

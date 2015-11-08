@@ -73,6 +73,11 @@ class DataBase
         self::$stmt->execute($parameters);
     }
 
+    public function fetchRow()
+    {
+        return self::$stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function fetchAll()
     {
         return self::$stmt->fetchAll();

@@ -1,29 +1,35 @@
 <?php
 include_once "../_autoload.php";
+
 include BASE_DIR . 'user/funcs.php';
-session_start();
-if (isset($_SESSION['user']) and !empty($_SESSION['user'])) {
-    $id = $_SESSION['user']['id'];
-    $name = $_SESSION['user']['firstname'];
-    $last_name = $_SESSION['user']['lastname'];
-    $email = $_SESSION['user']['email'];
-    $phone = $_SESSION['user']['phone'];
-} else {
-    die('Что-то пошло не так. :(');
-}
-if (!empty($_POST['f_name']) and !empty($_POST['l_name']) and !empty($_POST['email'])) {
-    $firs_name = $_POST['f_name'];
+if (!empty($_POST['f_name']) and !empty($_POST['l_name']) and
+    !empty($_POST['email']) and !empty($_POST['pass'])
+) {
+    $first_name = $_POST['f_name'];
     $last_name = $_POST['l_name'];
     $email = $_POST['email'];
-    $pass = (!empty($_POST['pass']) ? $_POST['pass'] : $_SESSION['user']['password']);
+    $pass = $_POST['pass'];
     $phone = (!empty($_POST['phone'])) ? $_POST['phone'] : " ";
     $user = new User();
-    $user->setUser($firs_name, $last_name, $email, $pass, $phone);
-    $res = $user->putUser($id);
+    $user->setUser($first_name, $last_name, $email, $pass, $phone);
+    $res = $user->postUser();
     if ($res) {
-        session_destroy();
-
-        header("Location: " .  BASE_URL . "user/");
+        header("refresh:5;url = " . BASE_URL . 'user/index.php');
+    ?>
+        <div class="alert alert-success">
+            <ul>
+            <li>User has been added successfully.<br>Redirect in 5 sec.</li>
+            </ul>
+        </div>
+    <?php
+    } else {
+    ?>
+        <div class="alert alert-success">
+            <ul>
+                <li>User has not been added. Email is occupied</li>
+            </ul>
+        </div>
+<?php
     }
 }
 ?>
@@ -40,7 +46,7 @@ if (!empty($_POST['f_name']) and !empty($_POST['l_name']) and !empty($_POST['ema
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Edit User
+                        Add User
                         <div class="pull-right">
                             <a class="btn btn-default" href="<?php echo BASE_URL ?>user/">
                                 <i class="fa fa-list"></i> Users list
@@ -48,33 +54,29 @@ if (!empty($_POST['f_name']) and !empty($_POST['l_name']) and !empty($_POST['ema
                         </div>
                     </div>
                     <div class="panel-body">
-                        <form name="add_form" action="<?php echo BASE_URL?>user/red_user.php" method="post">
+                        <form name="add_form" action="<?php echo BASE_URL?>user/add_user.php" method="post">
                             <div class="form-group">
                                 <label for="role">First name</label>
-                                <input type="text" class="form-control" name="f_name" placeholder="Enter first name"
-                                       value="<?php echo $name ?>" />
+                                <input type="text" class="form-control" name="f_name" placeholder="Enter first name" />
                             </div>
                             <div class="form-group">
                                 <label for="role">Last name</label>
-                                <input type="text" class="form-control" name="l_name" placeholder="Enter last name"
-                                       value="<?php echo $last_name ?>" />
+                                <input type="text" class="form-control" name="l_name" placeholder="Enter last name" />
                             </div>
                             <div class="form-group">
                                 <label for="role">Email</label>
-                                <input type="text" class="form-control" name="email" placeholder="Enter email"
-                                       value="<?php echo $email ?>" />
+                                <input type="text" class="form-control" name="email" placeholder="Enter email" />
                             </div>
                             <div class="form-group">
                                 <label for="role">Phone</label>
-                                <input type="text" class="form-control" name="phone" placeholder="Enter email"
-                                       value="<?php echo $phone ?>" />
+                                <input type="text" class="form-control" name="phone" placeholder="Enter email" />
                             </div>
                             <div class="form-group">
                                 <label for="role">Password</label>
                                 <input type="password" class="form-control" name="pass" placeholder="Enter password" />
                             </div>
 
-                            <button type="submit" class="btn btn-default">Update</button>
+                            <button type="submit" class="btn btn-default">Add user</button>
                         </form>
                     </div>
                 </div>
@@ -82,11 +84,6 @@ if (!empty($_POST['f_name']) and !empty($_POST['l_name']) and !empty($_POST['ema
         </div>
     </div>
 </div>
-<?php
-if (isset($res)) {
-    echo ($res == 1) ? " " : 'Обновление данных не удалось';
-}
-?>
 <!-- CONTENT-WRAPPER SECTION END-->
 <?php require_once BASE_DIR . "footer.php"; ?>
 <!-- FOOTER SECTION END-->

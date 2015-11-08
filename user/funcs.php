@@ -1,5 +1,6 @@
 <?php
 include_once "../_autoload.php";
+
 /**
  *
  */
@@ -10,7 +11,6 @@ class User extends DataBase
     private $email;
     private $password;
     private $phone;
-    private $created_at = "NOW()";
 
     public function setUser($f_name, $l_name, $email_, $pass, $phone_ = '')
     {
@@ -23,91 +23,117 @@ class User extends DataBase
 
     public function check_email()
     {
-        $sql = "SELECT id FROM user WHERE email = '$this->email'";
-        $this->execute($sql);
+        $query = "SELECT id FROM user WHERE email = :email";
+        $this
+            ->prepare($query)
+            ->bindValue(':email', $this->escape($this->email))
+            ->execute();
+
         $res = $this->fetchAll();
 
         return $res;
     }
 
-
     public function getUser($id)
     {
-        $sql = "SELECT * FROM user WHERE id = $id";
-        $this->execute($sql);
-        $user = $this->fetchAll();
+        $query = "SELECT * FROM `user` WHERE `id` = :id";
+        $this
+            ->prepare($query)
+            ->bindValue(':id', $this->escape($id), DataBase::PARAM_INT)
+            ->execute();
 
-        return $user[0];
+        return $this->fetchRow();
     }
 
     public function getUsers($order = 'id', $param = false)
     {
+        $sql = ($param) ? "SELECT * FROM user ORDER BY :order DESC"
+            : "SELECT * FROM user ORDER BY :order";
 
-        $sql = ($param) ? "SELECT * FROM user ORDER BY $order DESC"
-            : "SELECT * FROM user ORDER BY $order";
-        $this->execute($sql);
-        while ($res = mysqli_fetch_array($this->result, MYSQLI_ASSOC)) {
-            $arr[] = $res;
-        }
+        $this
+            ->prepare($sql)
+            ->bindValue(':order', $this->escape($order))
+            ->execute();
 
-        return $arr;
+        return $this->fetchAll();
     }
 
     public function postUser()
     {
         $checked = $this->check_email();
         if (!$checked) {
-            $sql
-                = "INSERT INTO user(`firstname`, `lastname`, `email`, `password`, `phone`, `created_at`) VALUES('$this->firstname', '$this->lastname', '$this->email', '$this->password', '$this->phone', $this->created_at)";
-            $res = $this->execute($sql);
+            $sql = "INSERT INTO user(`firstname`, `lastname`, `email`, `password`, `phone`, `created_at`)
+                VALUES(:firstname, :lastname, :email, :password, :phone, :created_at)";
 
-            return $this->result;
+            $this
+                ->prepare($sql)
+                ->bindValue(':firstname', $this->escape($this->firstname))
+                ->bindValue(':lastname', $this->escape($this->lastname))
+                ->bindValue(':email', $this->escape($this->email))
+                ->bindValue(':password', $this->escape($this->password))
+                ->bindValue(':phone', $this->escape($this->phone))
+                ->bindValue(':created_at', (new DateTime())->format('Y-m-d H:i:s'))
+                ->execute();
+
+            return true;
         } else {
             return false;
         }
-        // $checked = $this->check_email('localhost', 'root', '', 'new_user_db', $this->email);
-        // if($checked)
-        // {
-        //     $link = mysqli_connect($serv, $user, $pass, $db);
-        //     $sql = "INSERT INTO user(`firstname`, `lastname`, `email`, `password`, `phone`, `created_at`) VALUES('$this->firstname', '$this->lastname', '$this->email', '$this->password', '$this->phone', $this->created_at)";
-        //     $res = mysqli_query($link, $sql);
-        //     mysqli_close($link);
-        //     return $res;
-        // }else
-        // {
-        //     return false;
-        // }
-
     }
 
     public function putUser($id)
     {
-        $sql
-            = "UPDATE user SET firstname='$this->firstname', lastname='$this->lastname', email= '$this->email', password='$this->password', phone='$this->phone' WHERE id =$id";
-        $this->execute($sql);
+        $sql = "UPDATE user
+            SET firstname = :firstname,
+                lastname = :lastname,
+                email = :email,
+                password = :password,
+                phone = :phone
+            WHERE id = :id";
+    
+        $this
+            ->prepare($sql)
+            ->bindValue(':firstname', $this->escape($this->firstname))
+            ->bindValue(':lastname', $this->escape($this->lastname))
+            ->bindValue(':email', $this->escape($this->email))
+            ->bindValue(':password', $this->escape($this->password))
+            ->bindValue(':phone', $this->escape($this->phone))
+            ->bindValue(':id', $this->escape($id), DataBase::PARAM_INT)
+            ->execute();
 
-        return $this->result;
+        return true;
     }
 
     public function deleteUser($id)
     {
-        $sql = "DELETE FROM user WHERE id = $id";
-        $this->execute($sql);
+        $sql = "DELETE FROM user WHERE id = :id";
+        $this
+            ->prepare($sql)
+            ->bindValue(':id', $this->escape($id), DataBase::PARAM_INT)
+            ->execute();
 
-        return $this->result;
+        return true;
     }
 
     public function getUserRole($id)
     {
-        $sql = "SELECT role FROM user WHERE id = $id";
-        $this->execute($sql);
-        $role = $this->fetchAll();
+        $sql = "SELECT role FROM user WHERE id = :id";
+        $this
+            ->prepare($sql)
+            ->bindValue(':id', $this->escape($id), DataBase::PARAM_INT)
+            ->execute();
 
-        return $role;
+        return $this->fetchAll();
     }
 }
 
-$user_arr = array('id', 'firstname', 'lastname', 'email', 'phone',
-                  'created_at'); //массив для сортировки
+$user_arr = array(
+    'id',
+    'firstname',
+    'lastname',
+    'email',
+    'phone',
+    'created_at'
+); //массив для сортировки
 
 ?>
