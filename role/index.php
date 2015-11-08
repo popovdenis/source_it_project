@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Denis
- * Date: 30.10.2015
- * Time: 20:47
- */
 include_once "../_autoload.php";
 include BASE_DIR . "role/Role.php";
 
@@ -25,6 +19,11 @@ if (isset($_GET['del']) && !empty($_GET['del'])) {
     <div class="container">
         <div class="row">
             <div class="pull-right">
+                <a class="btn btn-default" href="user-role.php">
+                    <i class="fa fa-list"></i>Manage user roles
+                </a>
+            </div>
+            <div class="pull-right">
                 <a class="btn btn-default" href="new-role.php">
                     <i class="fa fa-pencil"></i> New Role
                 </a>
@@ -38,29 +37,45 @@ if (isset($_GET['del']) && !empty($_GET['del'])) {
                             <thead>
                             <tr>
                                 <th class="wpr10 align-c">#</th>
-                                <th class="align-c">Role</th>
+                                <th class="align-c">
+                                    <?php
+                                    $orderby = "role";
+                                    $orderas = "ASC";
+                                    if (isset ($_GET['order_by']) && isset($_GET['order_as'])) {
+                                        $orderby = $_GET['order_by'];
+                                        $orderas = $_GET['order_as'];
+                                        if ($orderas == 'ASC'){
+                                            $orderas = 'DESC';
+                                        }else{
+                                            $orderas = "ASC";
+                                        }
+                                    }
+                                    ?>
+                                    <a href="index.php?order_by=<?php echo $orderby ?>&order_as=<?php echo $orderas ?>"><i class="fa fa-sort"></i></a>
+                                    Role</th>
                                 <th class="wpr30 align-c">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-<?php
-foreach ($roleObj->getRoles('role') as $index => $role) {
-?>
-                            <tr>
-                                <td class="align-c"><?php echo ++$index ?></td>
-                                <td><?php echo $role['role'] ?></td>
-                                <td class="align-c">
-                                    <a class="btn btn-primary mr10"
-                                       href="edit-role.php?edit=<?php echo $role['id'] ?>&role=<?php echo $role['role'] ?>">
-                                        <i class="fa fa-edit "></i>
-                                        Edit
-                                    </a>
-                                    <a class="btn btn-danger" href="index.php?del=<?php echo $role['id'] ?>">
-                                        <i class="fa fa-pencil"></i> Delete
-                                    </a>
-                                </td>
-                            </tr>
-<?php } ?>
+                            <?php
+                            foreach ($roleObj->getRoles('role', [$orderby,$orderas]) as $index => $role) {
+                                ?>
+                                <tr>
+                                    <td class="align-c"><?php echo ++$index ?></td>
+                                    <td><?php echo $role[1] ?></td>
+                                    <td class="align-c">
+                                        <a class="btn btn-primary mr10"
+                                           href="edit-role.php?edit=<?php echo $role[0] ?>&role=<?php echo $role[1] ?>">
+                                            <i class="fa fa-edit "></i>
+                                            Edit
+                                        </a>
+                                        <a class="btn btn-danger" href="index.php?del=<?php echo $role[0] ?>">
+                                            <i class="fa fa-pencil"></i> Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php
+                            } ?>
                             </tbody>
                         </table>
                     </div>
