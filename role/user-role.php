@@ -23,7 +23,9 @@ $userObj = new User();
                         foreach ($userObj->getUsers() as $index => $user) {
                             ?>
                             <option
-                                value="<?php echo $user['firstname'] . " " . $user['lastname'] ?>"><?php echo $user['firstname'] . " " . $user['lastname'] ?></option>
+                                value="<?php echo $user['firstname'] . " " . $user['lastname'] ?>">
+                                <?php echo $user['firstname'] . " " . $user['lastname'] ?>
+                            </option>
                             <br>
                         <?php
                         }

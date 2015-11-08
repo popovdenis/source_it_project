@@ -23,7 +23,7 @@ class Role
      */
     private $database;
 
-    public  $role;
+    public $role;
 
     public function  __construct()
     {
@@ -65,7 +65,7 @@ class Role
             ->bindValue(':role', $this->database->escape($role))
             ->execute();
 
-        return '<center>Данные успешно сохранены</center>';
+        return 'Данные успешно сохранены';
     }
 
     public function putRole($table, $id, $role)
@@ -77,7 +77,7 @@ class Role
             ->bindValue(':id', $this->database->escape($id), DataBase::PARAM_INT)
             ->execute();
 
-        return '<center>Данные успешно обновлены</center>';
+        return 'Данные успешно обновлены';
     }
 
     public function deleteRole($table, $id)
@@ -93,25 +93,28 @@ class Role
 
     public function getUsersByRole()
     {
+//        $sql = "SELECT `user` FROM $tbl_name WHERE id=:id";
         $sql = "SELECT u.firstname,r.role FROM user_role ur
-JOIN user u ON ur.user_id=u.id
-JOIN role r ON ur.role_id=r.id;";
-        $this->database->execute($sql);
-        $row = $this->database->fetchAll();
-        return $row;
-        /*$sql = "SELECT `user` FROM $tbl_name WHERE id=:id";
-        $this->database
-            ->prepare($sql)
-            ->bindValue(':id', $this->database->escape($id), DataBase::PARAM_INT)
-            ->execute();
+            JOIN user u ON ur.user_id=u.id
+            JOIN role r ON ur.role_id=r.id;";
 
-        return $this->database->fetchAll();*/
+        $this->database
+        ->prepare($sql)
+//        ->bindValue(':id', $this->database->escape($id), DataBase::PARAM_INT)
+        ->execute();
+
+        return $this->database->fetchAll();
     }
 
-    public function setUsersByRole($user_id, $role_id){
-        $sql = "INSERT INTO user_role (`user_id`,`role_id`)
-VALUES ('".$user_id."',".$role_id.")";
-        $this->database->execute($sql);
+    public function setUsersByRole($user_id, $role_id)
+    {
+        $sql = "INSERT INTO user_role (`user_id`,`role_id`) VALUES (:userId, :roleId)";
+        $this->database
+            ->prepare($sql)
+            ->bindValue(':userId', $this->database->escape($user_id), DataBase::PARAM_INT)
+            ->bindValue(':roleId', $this->database->escape($role_id), DataBase::PARAM_INT)
+            ->execute();
+
         return 'Пользователь получил роль';
     }
 }
