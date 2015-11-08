@@ -44,8 +44,7 @@ if (isset($_GET['del']) && !empty($_GET['del'])) {
                             </thead>
                             <tbody>
 <?php
-$roles = $roleObj->getRoles('role');
-foreach ($roles as $index => $role) {
+foreach ($roleObj->getRoles('role') as $index => $role) {
 ?>
                             <tr>
                                 <td class="align-c"><?php echo ++$index ?></td>

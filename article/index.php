@@ -40,19 +40,18 @@ include_once BASE_DIR . "header.php";
 
 
         <?php
-
-            foreach($art->getArticles() as $value){ ?>
+            foreach($art->getArticles() as $value){?>
         <tr>
-            <td><?php echo $value[0] ?></td>
-            <td><?php echo $value[1] ?></td>
-            <td><?php echo $value[2] ?></td>
-            <td><?php echo $value[3] ?></td>
+            <td><?php echo $value['id'] ?></td>
+            <td><?php echo $value['title'] ?></td>
+            <td><?php echo $value['description'] ?></td>
+            <td><?php echo $value['created_at'] ?></td>
             <td class="align-c">
-                <a class="btn btn-primary mr10" href="edit.php?id=<?php echo $value[0] ?>">
+                <a class="btn btn-primary mr10" href="edit.php?id=<?php echo $value['id'] ?>">
                     <i class="fa fa-edit "></i>
                     Edit
                 </a>
-                <a class="btn btn-danger" href="remove.php?del=<?php echo $value[0] ?>">
+                <a class="btn btn-danger" href="remove.php?del=<?php echo $value['id'] ?>">
                     <i class="fa fa-pencil"></i> Delete
                 </a>
             </td>

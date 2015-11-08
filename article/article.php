@@ -20,53 +20,64 @@ postArticle ­ сохранить статью
 putArticle ­ обновить статью
 deleteArticle ­ удалить статью
  */
-header("Content-type:text/html; charset=utf-8");
 include_once "../_autoload.php";
 
 class Article
 {
-//    public $base;
     public $id;
-
 
     public function  __construct()
     {
         $this->base = new DataBase();
     }
 
-    public function postArticle($title_use,$description_use) // сохранить статью
+    public function postArticle($title_use, $description_use) // сохранить статью
     {
-        $s = "INSERT INTO article (`title`,`description`,`created_at`)
-              VALUES ('".$this->base->escape($title_use)."','".$this->base->escape($description_use)."',NOW())";
-        $this->base->execute($s);
+        $sql = "INSERT INTO article (`title`,`description`,`created_at`)
+          VALUES (:title, :description, :createdAt)";
+
+        $this->base
+            ->prepare($sql)
+            ->bindValue(':title', $this->base->escape($title_use))
+            ->bindValue(':description', $this->base->escape($description_use))
+            ->bindValue(':createdAt', (new DateTime())->format('Y-m-d H:i:s'))
+            ->execute();
+
         return true;
 
     }
 
     public function getArticle($get) // получить статью
     {
-        $this-> id = $get;
-        $edit =  "SELECT * FROM `article` WHERE `id` = $this->id";
-        $this->base->execute($edit);
+        $this->id = $get;
+        $query = "SELECT * FROM `article` WHERE `id` = :id";
+        $this->base
+            ->prepare($query)
+            ->bindValue(':id', $this->base->escape($this->id), DataBase::PARAM_INT)
+            ->execute();
 
         return $this->base->fetchAll();
     }
 
     public function getArticles() // получение списков статей
     {
-        $sql="SELECT * FROM article";
-        $this->base->execute($sql);
+        $query = "SELECT * FROM article";
+        $this->base
+            ->prepare($query)
+            ->execute();
+
         return $this->base->fetchAll();
     }
 
-
     public function putArticle($id, $title, $description) // обновить статью
     {
-        $update = "UPDATE article
-              SET `article`.`title`= '".$this->base->escape($title)."',
-              `article`.`description` = '".$this->base->escape($description)."'
-              WHERE `article`.`id` = '".$this->base->escape($id)."' ";
-        $this->base->execute($update);
+        $query = "UPDATE article SET `title`= :title, `description` = :description WHERE `article`.`id` = :id";
+        $this->base
+            ->prepare($query)
+            ->bindValue(':title', $this->base->escape($title))
+            ->bindValue(':description', $this->base->escape($description))
+            ->bindValue(':id', $this->base->escape($id), DataBase::PARAM_INT)
+            ->execute();
 
         return true;
     }
@@ -74,12 +85,15 @@ class Article
 
     public function deleteArticle($id) // удалить статью
     {
-        $sql = "DELETE FROM article WHERE id= ' ".$this->base->escape($id)." ' ";
-        return $this->base->execute($sql);
+        $query = "DELETE FROM article WHERE id = :id";
+        $this->base
+            ->prepare($query)
+            ->bindValue(':id', $this->base->escape($id), DataBase::PARAM_INT)
+            ->execute();
+
+        return true;
     }
 }
-
-
 
 //$article = new Article('Bogdan','Gutenev');
 //echo $article->title;
