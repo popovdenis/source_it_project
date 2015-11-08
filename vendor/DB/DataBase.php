@@ -1,15 +1,23 @@
 <?php
 class DataBase
 {
+    const PARAM_NULL = 0;
+
+    const PARAM_INT = 1;
+
+    const PARAM_STR = 2;
+
+    const PARAM_BOOL = 5;
+
     /**
-     * @var mysqli
+     * @var PDO
      */
     public static $db = null;
-    /**
-     * @var mysqli_result
-     */
 
-    public $result;
+    /**
+     * @var PDOStatement|false
+     */
+    public static $stmt;
 
     public function  __construct()
     {
@@ -21,19 +29,62 @@ class DataBase
         return self::$db->insert_id;
     }
 
-    public function execute($sql)
+    public function prepare($sql)
     {
-        $this->result = self::$db->query($sql);
+        self::$stmt = self::$db->prepare($sql);
+
+        return $this;
+    }
+
+    public function exec($sql)
+    {
+        try {
+            self::$db->exec($sql);
+        } catch (PDOException $exception) {
+            die($exception->getMessage());
+        }
+    }
+
+    public function query($sql)
+    {
+        self::$stmt = self::$db->query($sql);
+
+        if (self::$db->errorCode() != 0000) {
+            die(self::$db->errorInfo());
+        }
+    }
+
+    public function bindParameter($alias, $value)
+    {
+        self::$stmt->bindParam($alias, $value);
+
+        return $this;
+    }
+
+    public function bindValue($alias, $value, $dataType = self::PARAM_STR)
+    {
+        self::$stmt->bindValue($alias, $value, $dataType);
+
+        return $this;
+    }
+
+    public function execute($parameters = null)
+    {
+        self::$stmt->execute($parameters);
     }
 
     public function fetchAll()
     {
-        return $this->result->fetch_all();
+        return self::$stmt->fetchAll();
     }
 
     public function escape($value)
     {
-        return self::$db->real_escape_string(trim(strip_tags($value)));
+        return trim(strip_tags($value));
     }
 
+    public function quote($value)
+    {
+        return self::$db->quote($value);
+    }
 }

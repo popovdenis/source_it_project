@@ -3,7 +3,7 @@
 trait DB
 {
     /**
-     * @var mysqli Mysqli entity.
+     * @var PDO PDO entity.
      */
     private $connection;
 
@@ -17,24 +17,20 @@ trait DB
         try {
             $config = Config::getConfig();
 
-            $mysql = mysqli_init();
-            $mysql->options(MYSQLI_OPT_CONNECT_TIMEOUT, 10);
-
-            $connection = $mysql->real_connect(
-                $config['host'],
-                $config['username'],
-                $config['password']
+            $opt = array(
+                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
             );
-            if (!$connection) {
-                throw new Exception('No database connection');
-            }
-            if (!$mysql->select_db($config['database'])) {
-                throw new Exception('Database is not selected');
-            }
-            $this->connection = $mysql;
+            $dbPDO = new PDO(
+                'mysql:host=' . $config['host'] . ';dbname=' . $config['database'] . ';charset=utf8',
+                $config['username'],
+                $config['password'],
+                $opt
+            );
+            $this->connection = $dbPDO;
 
         } catch (Exception $exception) {
-            echo $exception->getMessage();
+            die($exception->getMessage());
         }
     }
 

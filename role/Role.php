@@ -22,7 +22,8 @@ class Role
      * @var Database
      */
     private $database;
-    public $role;
+
+    public  $role;
 
     public function  __construct()
     {
@@ -42,39 +43,56 @@ class Role
     public function getRoles($tbl_name)
     {
         $sql = "SELECT * FROM $tbl_name ORDER BY id";
-         $this->database->execute($sql);
-        $row = $this->database->fetchAll();
-        return $row;
+        $this->database
+            ->prepare($sql)
+            ->execute();
+
+        return $this->database->fetchAll();
     }
 
     public function postRole($table, $role)
     {
-        $sql ="INSERT INTO $table (`role`)
-VALUES ('" . $this->database->escape($role) . "')";
-        $this->database->execute($sql);
+        $sql = "INSERT INTO $table (`role`) VALUES (:role)";
+        $this->database
+            ->prepare($sql)
+            ->bindValue(':role', $this->database->escape($role))
+            ->execute();
+
         return '<center>Данные успешно сохранены</center>';
     }
 
     public function putRole($table, $id, $role)
     {
-        $sql = "UPDATE $table SET role='" . $this->database->escape($role) . "' WHERE id='$id'";
-        $this->database->execute($sql);
+        $sql = "UPDATE $table SET role=:role WHERE id=:id";
+        $this->database
+            ->prepare($sql)
+            ->bindValue(':role', $this->database->escape($role))
+            ->bindValue(':id', $this->database->escape($id), DataBase::PARAM_INT)
+            ->execute();
+
         return '<center>Данные успешно обновлены</center>';
     }
 
     public function deleteRole($table, $id)
     {
-         $sql = "DELETE FROM $table WHERE id=$id";
-         $this->database->execute($sql);
+        $sql = "DELETE FROM $table WHERE id=:id";
+        $this->database
+            ->prepare($sql)
+            ->bindValue(':id', $this->database->escape($id), DataBase::PARAM_INT)
+            ->execute();
+
         return true;
     }
 
     public function getUsersByRole($tbl_name, $id)
     {
-        $sql = "SELECT `user` FROM $tbl_name WHERE id='$id'";
-       $this->database->execute($sql);
-        $row = $this->database->fetchAll();
-        return $row;
+        $sql = "SELECT `user` FROM $tbl_name WHERE id=:id";
+        $this->database
+            ->prepare($sql)
+            ->bindValue(':id', $this->database->escape($id), DataBase::PARAM_INT)
+            ->execute();
+
+        return $this->database->fetchAll();
     }
 }
 //

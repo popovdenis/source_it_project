@@ -44,18 +44,19 @@ if (isset($_GET['del']) && !empty($_GET['del'])) {
                             </thead>
                             <tbody>
 <?php
-foreach ($roleObj->getRoles('role') as $index => $role) {
+$roles = $roleObj->getRoles('role');
+foreach ($roles as $index => $role) {
 ?>
                             <tr>
                                 <td class="align-c"><?php echo ++$index ?></td>
-                                <td><?php echo $role[1] ?></td>
+                                <td><?php echo $role['role'] ?></td>
                                 <td class="align-c">
                                     <a class="btn btn-primary mr10"
-                                       href="edit-role.php?edit=<?php echo $role[0] ?>&role=<?php echo $role[1] ?>">
+                                       href="edit-role.php?edit=<?php echo $role['id'] ?>&role=<?php echo $role['role'] ?>">
                                         <i class="fa fa-edit "></i>
                                         Edit
                                     </a>
-                                    <a class="btn btn-danger" href="index.php?del=<?php echo $role[0] ?>">
+                                    <a class="btn btn-danger" href="index.php?del=<?php echo $role['id'] ?>">
                                         <i class="fa fa-pencil"></i> Delete
                                     </a>
                                 </td>
