@@ -87,7 +87,7 @@ JOIN role r ON ur.role_id=r.id;";
 
     public function setUsersByRole($user_id, $role_id){
         $sql = "INSERT INTO user_role (`user_id`,`role_id`)
-VALUES ($user_id , $role_id)";
+VALUES ('".$user_id."',".$role_id.")";
         $this->database->execute($sql);
         return 'Пользователь получил роль';
     }
