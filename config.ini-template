@@ -1,6 +1,6 @@
-base_url = mysite/source_it_project/
+base_url = myprog/progect/
 host = localhost
 username = root
 password = root
-database = test
+database = progect
 port = 3306
