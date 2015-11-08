@@ -33,12 +33,17 @@
 
     <form action="index.php" method="post">
         <input type="hidden" name="test">
-         <button class='waves-effect waves-teal btn-large' type='submit'>
+        <button class='waves-effect waves-teal btn-large' type='submit'>
             <i class='material-icons center '>play_circle_outline</i> Начать тест
         </button>
 
     </form>
-
+    <div class="collection col l6">
+        <a class='  collection-item cyan-text text-darken-1 red lighten-5 waves-effect waves-teal' href="../view.php">
+            <i class='material-icons left'>input</i>
+            Если хочешь добавить вопрос в тест, жми сюда=)
+        </a>
+    </div>
 </div>
 </body>
 </html>

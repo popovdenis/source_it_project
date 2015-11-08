@@ -22,6 +22,9 @@
 <div class="container">
 
     <?php
+//    ini_set('display_errors', 1);
+//    ini_set('display_startup_errors', 1);
+//    error_reporting(E_ALL);
 
     header("Content-type: text/html; charset=utf-8");
     include_once("../defines.php");
@@ -33,7 +36,6 @@
     //    session_set_cookie_params(7200);
     ini_set('session.gc_maxlifetime', 7200);
     session_start();
-
 
     $questions = $questionDao->getAllQuestions();
     //    print_r($questions);
