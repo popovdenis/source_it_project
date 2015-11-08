@@ -1,74 +1,71 @@
 <?php
 include_once "../_autoload.php";
-    class Gallery
+
+class Gallery
+{
+    public function __construct()
     {
-        public function __construct()
-        {
-            $this->database = new DataBase();
-        }
-
-        public function postGallery($title, $desc)
-        {
-
-            $sql = "INSERT INTO gallery(`title`, `description`, `created_at`)
-                        VALUES ('$title', '$desc', NOW())";
-
-            $this->database->execute($sql);
-
-            if ($this->database->result == true) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        public function getGallery($update)
-        {
-            $sql = "SELECT `gallery`.`title`, `gallery`.`description` FROM gallery
-                        WHERE `gallery`.`id` = '$update'";
-
-            $this->database->execute($sql);
-
-            return $this->database->fetchAll();
-        }
-
-        public function getGalleries()
-        {
-            $sql = "SELECT * FROM gallery";
-
-            $this->database->execute($sql);
-
-            return $this->database->fetchAll();
-        }
-
-        public function putGallery($title, $desc, $update)
-        {
-           $sql = "UPDATE gallery
-                   SET `gallery`.`title` = '$title', `gallery`.`description` = '$desc'
-                   WHERE `gallery`.`id` = '$update'";
-
-           $this->database->execute($sql);
-
-            if ($this->database->result == true) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-
-        public function deleteGallery($delete)
-        {
-            $sql = "DELETE FROM gallery WHERE `id` = '$delete'";
-
-            $this->database->execute($sql);
-
-            if ($this->database->result == true) {
-                return true;
-            } else {
-                return false;
-            }
-        }
+        $this->database = new DataBase();
     }
+
+    public function postGallery($title, $desc)
+    {
+        $query = "INSERT INTO gallery(`title`, `description`, `created_at`) VALUES (:title, :description, :createdAt)";
+        $this->database
+            ->prepare($query)
+            ->bindValue(':title', $this->database->escape($title))
+            ->bindValue(':description', $this->database->escape($desc))
+            ->bindValue(':createdAt', (new DateTime())->format('Y-m-d H:i:s'))
+            ->execute();
+
+        return true;
+    }
+
+    public function getGallery($update)
+    {
+        $query = "SELECT `title`, `description` FROM gallery WHERE `id` = :id";
+        $this->database
+            ->prepare($query)
+            ->bindValue(':id', $this->database->escape($update), DataBase::PARAM_INT)
+            ->execute();
+
+        return $this->database->fetchAll();
+    }
+
+    public function getGalleries()
+    {
+        $query = "SELECT * FROM gallery";
+        $this->database
+            ->prepare($query)
+            ->execute();
+
+        return $this->database->fetchAll();
+    }
+
+    public function putGallery($title, $desc, $update)
+    {
+        $query = "UPDATE gallery SET `title` = :title, `description` = :description WHERE `id` = :id";
+        $this->database
+            ->prepare($query)
+            ->bindValue(':title', $this->database->escape($title))
+            ->bindValue(':description', $this->database->escape($desc))
+            ->bindValue(':id', $this->database->escape($update), DataBase::PARAM_INT)
+            ->execute();
+
+        return true;
+    }
+
+    public function deleteGallery($delete)
+    {
+        $query = "DELETE FROM gallery WHERE `id` = :id";
+        $this->database
+            ->prepare($query)
+            ->bindValue(':id', $this->database->escape($delete), DataBase::PARAM_INT)
+            ->execute();
+
+        return true;
+    }
+}
 
 
 

@@ -33,11 +33,9 @@ class Article
 
     public function postArticle($title_use, $description_use) // сохранить статью
     {
-        $sql = "INSERT INTO article (`title`,`description`,`created_at`)
-          VALUES (:title, :description, :createdAt)";
-
+        $query = "INSERT INTO article (`title`,`description`,`created_at`) VALUES (:title, :description, :createdAt)";
         $this->base
-            ->prepare($sql)
+            ->prepare($query)
             ->bindValue(':title', $this->base->escape($title_use))
             ->bindValue(':description', $this->base->escape($description_use))
             ->bindValue(':createdAt', (new DateTime())->format('Y-m-d H:i:s'))
@@ -71,7 +69,7 @@ class Article
 
     public function putArticle($id, $title, $description) // обновить статью
     {
-        $query = "UPDATE article SET `title`= :title, `description` = :description WHERE `article`.`id` = :id";
+        $query = "UPDATE article SET `title`= :title, `description` = :description WHERE `id` = :id";
         $this->base
             ->prepare($query)
             ->bindValue(':title', $this->base->escape($title))

@@ -2,18 +2,18 @@
 include_once "../_autoload.php";
 include BASE_DIR . "gallery/gallery.php";
 
-    $gal = new Gallery();
-    $get = $gal->getGalleries();
+$gal = new Gallery();
+$get = $gal->getGalleries();
 
-        if (isset($_GET['delete']) && !empty($_GET['delete'])) {
-            $delete = $_GET['delete'];
+if (isset($_GET['delete']) && !empty($_GET['delete'])) {
+    $delete = $_GET['delete'];
 
-            if($gal->deleteGallery($delete) == true) {
-                header('Location: ../gallery/index.php');
-            } else {
-                echo 'Request failed!';
-            }
-        }
+    if ($gal->deleteGallery($delete) == true) {
+        header('Location: ../gallery/index.php');
+    } else {
+        echo 'Request failed!';
+    }
+}
 include_once BASE_DIR . "header.php";
 ?>
 <body>
@@ -46,24 +46,25 @@ include_once BASE_DIR . "header.php";
                             </tr>
                             </thead>
                             <tbody>
-        <?php
-            foreach ($get as $val) { ?>
-        <tr>
-        <td><?php echo $val[0] ?></td>
-        <td><?php echo $val[1] ?></td>
-        <td><?php echo substr($val[2], 0, 20) ?></td>
-        <td><?php echo $val[3] ?></td>
-        <td class="align-c">
-            <a class="btn btn-primary mr10" href="update_gallery.php?update=<?php echo $val[0] ?>">
-                <i class="fa fa-edit "></i>
-                Edit
-            </a>
-            <a class="btn btn-danger" href="index.php?delete=<?php echo $val[0] ?>">
-                <i class="fa fa-pencil"></i> Delete
-            </a>
-        </td>
-        </tr>
-            <?php } ?>
+                            <?php
+                            foreach ($get as $val) { ?>
+                                <tr>
+                                    <td><?php echo $val['id'] ?></td>
+                                    <td><?php echo $val['title'] ?></td>
+                                    <td><?php echo substr($val['description'], 0, 20) ?></td>
+                                    <td><?php echo $val['created_at'] ?></td>
+                                    <td class="align-c">
+                                        <a class="btn btn-primary mr10"
+                                           href="update_gallery.php?update=<?php echo $val['id'] ?>">
+                                            <i class="fa fa-edit "></i>
+                                            Edit
+                                        </a>
+                                        <a class="btn btn-danger" href="index.php?delete=<?php echo $val['id'] ?>">
+                                            <i class="fa fa-pencil"></i> Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
                             </tbody>
                         </table>
                     </div>
