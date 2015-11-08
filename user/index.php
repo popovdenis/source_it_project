@@ -1,6 +1,5 @@
 <?php
 include_once "../_autoload.php";
-
 include BASE_DIR . 'user/funcs.php';
 if (!empty($_POST['f_name']) and !empty($_POST['l_name']) and
     !empty($_POST['email']) and !empty($_POST['pass'])
@@ -18,26 +17,18 @@ if (!empty($_POST['f_name']) and !empty($_POST['l_name']) and
     }
     // $user->deleteUser('localhost', 'root', '', 'new_user_db', 'qaweeds@gmail.com');
 }
-include_once BASE_DIR . "header.php" ?>
-<body>
-<!-- HEADER END-->
-<?php require_once BASE_DIR . "header-logo-bar.php"; ?>
-<!-- LOGO HEADER END-->
-<?php require_once BASE_DIR . "header-menu.php"; ?>
-<!-- MENU SECTION END-->
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Add new user</title>
 </head>
 <body>
-<div class="content-wrapper">
-    <div class="container">
-        <div class="row">
 <a href="users.php">К списку пользователей</a>
 
 <form name="add_form" action="" method="post">
-    <h2>Введите данные для добавления</h2>
+    <h2>Введите данные дял добавления</h2>
 
     <p>* - required fields</p>
 
@@ -63,12 +54,6 @@ if (isset($res)) {
     echo ($res == 1) ? "User has been added successfully.<br>Redirect in 5 sec."
         : 'User has not been added. Email is occupied';
 }
-
 ?>
-        </div>
-    </div>
-</div>
-<!-- CONTENT-WRAPPER SECTION END-->
-<?php require_once BASE_DIR . "footer.php"; ?>
 </body>
 </html>

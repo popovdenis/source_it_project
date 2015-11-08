@@ -77,11 +77,18 @@ VALUES ('" . $this->database->escape($role) . "')";
 
     public function getUsersByRole()
     {
-        $sql = "SELECT u.firstname FROM user as u
-  INNER JOIN user_role ur ON u.id=ur.user_id
-  INNER JOIN role r ON r.id=ur.role_id;";
+        $sql = "SELECT u.firstname,r.role FROM user_role ur
+JOIN user u ON ur.user_id=u.id
+JOIN role r ON ur.role_id=r.id;";
         $this->database->execute($sql);
         $row = $this->database->fetchAll();
         return $row;
+    }
+
+    public function setUsersByRole($user_id, $role_id){
+        $sql = "INSERT INTO user_role (`user_id`,`role_id`)
+VALUES ('".$user_id."',".$role_id.")";
+        $this->database->execute($sql);
+        return 'Пользователь получил роль';
     }
 }

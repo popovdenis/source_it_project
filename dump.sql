@@ -1,8 +1,12 @@
 <<<<<<< HEAD
 CREATE DATABASE source_it_project;
+<<<<<<< HEAD
 =======
 CREATE DATABASE progect;
 >>>>>>> dev
+=======
+
+>>>>>>> angela
 USE progect;
 
 CREATE TABLE role (
@@ -27,6 +31,7 @@ CREATE TABLE user_role (
 `role_id` INT(5) NOT NULL
 );
 
+<<<<<<< HEAD
 INSERT INTO `user_role`(`user_id`, `role_id`) VALUES ('1','3');
 INSERT INTO `user_role`(`user_id`, `role_id`) VALUES ('2','1');
 INSERT INTO `user_role`(`user_id`, `role_id`) VALUES ('3','5');
@@ -41,3 +46,22 @@ CREATE TABLE gallery(
   `created_at` DATETIME NOT NULL
 );
 >>>>>>> dev
+=======
+ALTER TABLE user_role
+    ADD CONSTRAINT fk_user
+FOREIGN KEY (`user_id`)
+      REFERENCES user(`id`)
+ON UPDATE CASCADE
+ON DELETE CASCADE
+;
+
+ALTER TABLE user_role
+    ADD CONSTRAINT fk_role
+FOREIGN KEY (`role_id`)
+      REFERENCES role(`id`)
+ON UPDATE CASCADE
+ON DELETE CASCADE
+;
+
+
+>>>>>>> angela

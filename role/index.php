@@ -20,7 +20,7 @@ if (isset($_GET['del']) && !empty($_GET['del'])) {
         <div class="row">
             <div class="pull-right">
                 <a class="btn btn-default" href="user-role.php">
-                    <i class="fa fa-angellist"></i>User Role
+                    <i class="fa fa-list"></i>Manage user roles
                 </a>
             </div>
             <div class="pull-right">
@@ -50,7 +50,6 @@ if (isset($_GET['del']) && !empty($_GET['del'])) {
                                             $orderas = "ASC";
                                         }
                                     }
-                                   ($roleObj->getRoles('role', [$orderby,$orderas]));
                                     ?>
                                     <a href="index.php?order_by=<?php echo $orderby ?>&order_as=<?php echo $orderas ?>"><i class="fa fa-sort"></i></a>
                                     Role</th>
@@ -75,7 +74,8 @@ if (isset($_GET['del']) && !empty($_GET['del'])) {
                                         </a>
                                     </td>
                                 </tr>
-                            <?php } ?>
+                            <?php
+                            } ?>
                             </tbody>
                         </table>
                     </div>
