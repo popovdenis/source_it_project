@@ -1,3 +1,12 @@
+<?php
+
+header("Content-type: text/html; charset=utf-8");
+if (!isset($_POST['test'])) {
+    $title = 'Пройдите тест!';
+} else {
+    header('Location: ../startTest/model.php');
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,15 +29,7 @@
     </div>
 </nav>
 <div class="container">
-    <?php
 
-    header("Content-type: text/html; charset=utf-8");
-    if (!isset($_POST['test'])) {
-        $title = 'Пройдите тест!';
-    } else {
-        header('Location: ../startTest/model.php');
-    }
-    ?>
     <h3 class=' cyan-text text-darken-3 '><?php echo $title; ?></h3>
 
     <form action="index.php" method="post">
