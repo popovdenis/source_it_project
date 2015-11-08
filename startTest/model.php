@@ -25,7 +25,6 @@
 //    ini_set('display_errors', 1);
 //    ini_set('display_startup_errors', 1);
 //    error_reporting(E_ALL);
-
     header("Content-type: text/html; charset=utf-8");
     include_once("../defines.php");
     require_once BASE_DIR . "/dao/ImplQuestionDao.php";
@@ -33,8 +32,6 @@
     $questionDao = new QuestionDaoImpl();
     $answerDao = new AnswerDaoImpl();
 
-    //    session_set_cookie_params(7200);
-    ini_set('session.gc_maxlifetime', 7200);
     session_start();
 
     $questions = $questionDao->getAllQuestions();
@@ -44,7 +41,7 @@
 
     $answer = $_POST['answer'];
 
-    //            unset($_SESSION['answers']);
+    //  unset($_SESSION['answers']);
     if (!isset($_SESSION['answers'])) {
 
         $_SESSION['answers'] = [];
