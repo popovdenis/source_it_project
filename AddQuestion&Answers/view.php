@@ -2,10 +2,10 @@
 <html>
 <head>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="res/css/materialize.min.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="../res/css/materialize.min.css" media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <script type="text/javascript" src="res/js/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="res/js/materialize.min.js"></script>
+    <script type="text/javascript" src="../res/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="../res/js/materialize.min.js"></script>
     <meta charset="utf-8"/>
 </head>
 <body class="deep-orange lighten-5">
@@ -14,7 +14,7 @@
     <div class="nav-wrapper red lighten-1">
         <a href="#" class="brand-logo right">Online-test</a>
         <ul class="left">
-            <li><a href="startTestSession/index.php">На главную</a></li>
+            <li><a href="../startTest/index.php">На главную</a></li>
         </ul>
     </div>
 </nav>

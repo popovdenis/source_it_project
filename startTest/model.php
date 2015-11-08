@@ -56,7 +56,7 @@
     $_SESSION['questionsCounter']++;
 
     if (!isset($questions[$questionsCounter])) {
-        header('Location: result.php');
+        header('Location: controller.php');
 
     }
     $title = $questions[$questionsCounter];
@@ -68,7 +68,7 @@
 
     <br><br><h5 class=' cyan-text text-darken-3 '><?php echo $title->getQuestion(); ?></h5>
 
-    <form action="quiz.php" method="post">
+    <form action="model.php" method="post">
         <br><input type="hidden" name="q" value="<?php echo $questionsCounter; ?>">
         <?php foreach ($questionDao->getAnswersByQuestion($title->getId()) as $valAnswerByQuestion) {
 

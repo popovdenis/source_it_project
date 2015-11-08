@@ -1,13 +1,12 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="res/css/materialize.min.css" media="screen,projection"/>
-    <link type="text/css" rel="stylesheet" href="res/css/style.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="../res/css/materialize.min.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="../res/css/style.css" media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <script type="text/javascript" src="res/js/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="res/js/materialize.min.js"></script>
+    <script type="text/javascript" src="../res/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="../res/js/materialize.min.js"></script>
 </head>
 <body class="deep-orange lighten-5">
 
@@ -15,7 +14,7 @@
     <div class="nav-wrapper red lighten-1">
         <a href="#" class="brand-logo right">Online-test</a>
         <ul class="left">
-            <li><a href="startTestSession/index.php">На главную</a></li>
+            <li><a href="../startTest/index.php">На главную</a></li>
         </ul>
     </div>
 </nav>
@@ -25,7 +24,7 @@
      * Add question and answers in DB.
      */
 
-    include_once("defines.php");
+    include_once("../defines.php");
     require_once BASE_DIR . "/dao/ImplQuestionDao.php";
     require_once BASE_DIR . "/dao/ImplAnswerDao.php";
 
@@ -111,7 +110,7 @@
             Если хочешь добавить вопрос в тест, жми сюда=)
         </a>
         <a class='  collection-item cyan-text text-darken-1 red lighten-5 waves-effect waves-teal'
-           href="startTestSession/index.php">
+           href="../startTest/index.php">
             <i class='material-icons left'>replay</i>
             Начать тест!
         </a>

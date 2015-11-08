@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Maria Ostashevskaya
  */
@@ -9,9 +10,9 @@ interface AnswersDao
 
     public function getAllAnswers();
 
-    public function saveAnswer($answer,$trueAnswer);
+    public function saveAnswer($answer, $trueAnswer);
 
-    public function updateAnswer($id,$answer);
+    public function updateAnswer($id, $answer);
 
     public function deleteAnswer($id);
 

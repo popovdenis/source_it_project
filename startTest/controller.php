@@ -55,7 +55,8 @@
         из <?php echo $countTrueAnswer ?>  </h3>
 
     <div class="collection col l6">
-        <a class='  collection-item cyan-text text-darken-1 red lighten-5 waves-effect waves-teal' href="../view.php">
+        <a class='  collection-item cyan-text text-darken-1 red lighten-5 waves-effect waves-teal'
+           href="../AddQuestion&Answers/view.php">
             <i class='material-icons left'>input</i>
             Если хочешь добавить вопрос в тест, жми сюда=)
         </a>

@@ -41,7 +41,7 @@ class AnswerDaoImpl implements AnswersDao
         return $answers;
     }
 
-    public function saveAnswer($answer,$trueAnswer) //сохранить ответ
+    public function saveAnswer($answer, $trueAnswer) //сохранить ответ
     {
 
         $sql = "INSERT INTO `answer` (`answer`,`trueAnswer`) VALUES ('$answer','$trueAnswer')";
