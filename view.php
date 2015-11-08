@@ -1,6 +1,3 @@
-<?php
-include_once("defines.php");
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,13 +6,14 @@ include_once("defines.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script type="text/javascript" src="res/js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="res/js/materialize.min.js"></script>
+    <meta charset="utf-8"/>
 </head>
 <body class="deep-orange lighten-5">
 
 <nav>
-    <div class="nav-wrapper  red lighten-2">
+    <div class="nav-wrapper red lighten-1">
         <a href="#" class="brand-logo right">Online-test</a>
-        <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <ul class="left">
             <li><a href="startTestSession/index.php">На главную</a></li>
         </ul>
     </div>

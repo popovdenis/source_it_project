@@ -14,8 +14,8 @@
 <nav>
     <div class="nav-wrapper red lighten-1">
         <a href="#" class="brand-logo right">Online-test</a>
-        <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <li><a href="/startTestSession/index.php">На главную</a></li>
+        <ul class="left">
+            <li><a href="startTestSession/index.php">На главную</a></li>
         </ul>
     </div>
 </nav>

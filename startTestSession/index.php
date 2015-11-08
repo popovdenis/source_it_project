@@ -14,18 +14,15 @@
 <nav>
     <div class="nav-wrapper red lighten-1">
         <a href="#" class="brand-logo right">Online-test</a>
-        <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <ul class="left">
             <li><a href="index.php">На главную</a></li>
         </ul>
     </div>
 </nav>
 <div class="container">
-
     <?php
 
     header("Content-type: text/html; charset=utf-8");
-    ini_set('allow_url_include', 1);
-    ini_set('allow_url_fopen', 1);
     if (!isset($_POST['test'])) {
         $title = 'Пройдите тест!';
     } else {
