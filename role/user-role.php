@@ -44,12 +44,10 @@ $userObj = new User();
                 </form>
                 <?php
                 if (isset($_POST['role']) && isset($_POST['user'])) {
-                    foreach ($userObj->getUsers() as $u) {
-                        if ($u['firstname']." ".$u['lastname'] == $_POST['user']) {
-                            foreach ($roleObj->getRoles('role') as $r) {
-                                if (array ($r[1]) == $_POST['role']) {
-                                    echo '<div class="alert alert-success">' .$roleObj->setUsersByRole($u['id'],$r[0]). '</div>';
-                                }
+                    foreach ($roleObj->getRoles('role') as $r) {
+                        foreach ($userObj->getUsers() as $u) {
+                            if (($u['firstname'] . " " . $u['lastname'] == $_POST['user']) && (array($r[1]) == $_POST['role'])) {
+                                echo '<div class="alert alert-success">' . $roleObj->setUsersByRole($u['id'], ($r[0])) . '</div>';
                             }
                         }
                     }
