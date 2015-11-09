@@ -6,40 +6,41 @@ $gal = new Gallery();
 $database = new DataBase();
 $res = array();
 
-    if (isset($_GET['update']) && !empty($_GET['update'])) {
-        $update = $_GET['update'];
+if (isset($_GET['update']) && !empty($_GET['update'])) {
+    $update = $_GET['update'];
 
-       $res = $gal->getGallery($update);
+   $res = $gal->getGallery($update);
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (empty($_POST['title']) or empty($_POST['description'])) {
-                echo '<div class="alert alert-danger">';
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (empty($_POST['title']) or empty($_POST['description'])) {
+            echo '<div class="alert alert-danger">';
+                echo '<ul>';
+                    echo '<li>Заполните все поля!</li>';
+                echo '</ul>';
+            echo '</div>';
+        } else {
+            $title = $database->escape($_POST['title']);
+            $desc = $database->escape($_POST['description']);
+
+            if ($gal->putGallery($title, $desc, $update) == true) {
+                header('Refresh: 5; url=../gallery/index.php');
+                echo '<div class="alert alert-success">';
                     echo '<ul>';
-                        echo '<li>Заполните все поля!</li>';
+                        echo '<li>Данные успешно добавлены!</li>';
+                        echo '<li>Пожалуйста подождите, через 5 секунд вы будете перенаправлены на основной контент!</li>';
                     echo '</ul>';
                 echo '</div>';
             } else {
-                $title = $database->escape($_POST['title']);
-                $desc = $database->escape($_POST['description']);
-
-                if ($gal->putGallery($title, $desc, $update) == true) {
-                    header('Refresh: 5; url=../gallery/index.php');
-                    echo '<div class="alert alert-success">';
-                        echo '<ul>';
-                            echo '<li>Данные успешно добавлены!</li>';
-                            echo '<li>Пожалуйста подождите, через 5 секунд вы будете перенаправлены на основной контент!</li>';
-                        echo '</ul>';
-                    echo '</div>';
-                } else {
-                    echo '<div class="alert alert-danger">';
-                        echo '<ul>';
-                            echo '<li>Request failed!</li>';
-                        echo '</ul>';
-                    echo '</div>';
-                }
+                echo '<div class="alert alert-danger">';
+                    echo '<ul>';
+                        echo '<li>Request failed!</li>';
+                    echo '</ul>';
+                echo '</div>';
             }
         }
     }
+}
+
 include_once BASE_DIR . "header.php";
 ?>
 <body>

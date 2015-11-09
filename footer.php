@@ -21,5 +21,6 @@
 <script src="<?php echo ASSETS_URL ?>js/jquery-1.11.1.js"></script>
 <!-- BOOTSTRAP SCRIPTS  -->
 <script src="<?php echo ASSETS_URL ?>js/bootstrap.js"></script>
+<script src="<?php echo ASSETS_URL ?>js/users.js"></script>
 </body>
 </html>

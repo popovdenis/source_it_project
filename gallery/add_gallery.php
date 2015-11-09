@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $desc = $database->escape($_POST['description']);
 
         if ($gal->postGallery($title, $desc) == true) {
-            header('Refresh: 5; url=../gallery/index.php');
+            header('Refresh: 5; url = ' . BASE_URL . 'gallery/index.php');
             echo '<div class="alert alert-success">';
                 echo '<ul>';
                     echo '<li>Данные успешно добавлены!</li>';

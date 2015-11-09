@@ -17,6 +17,7 @@
                         <li><a href="<?php echo BASE_URL ?>role/">Roles</a></li>
                         <li><a href="<?php echo BASE_URL ?>user/">Users</a></li>
                         <li><a href="<?php echo BASE_URL ?>gallery/">Gallery</a></li>
+                        <li><a href="<?php echo BASE_URL ?>article/">News</a></li>
                     </ul>
                 </div>
             </div>

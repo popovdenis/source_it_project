@@ -1,59 +1,108 @@
 <?php
 include_once "../_autoload.php";
-include BASE_DIR . 'user/funcs.php';
-if (!empty($_POST['f_name']) and !empty($_POST['l_name']) and
-    !empty($_POST['email']) and !empty($_POST['pass'])
-) {
-    $firs_name = $_POST['f_name'];
-    $last_name = $_POST['l_name'];
-    $email = $_POST['email'];
-    $pass = $_POST['pass'];
-    $phone = (!empty($_POST['phone'])) ? $_POST['phone'] : " ";
-    $user = new User();
-    $user->setUser($firs_name, $last_name, $email, $pass, $phone);
-    $res = $user->postUser();
-    if ($res) {
-        header("refresh:5;url=users.php");
+include BASE_DIR.'user/funcs.php';
+$users = new User();
+session_start();
+if (isset($_GET['sort'])) {
+    $sort_by = $_GET['sort'];
+    if (isset($_SESSION['get'])) {
+        if ($sort_by == $_SESSION['get']) {
+            $res = $users->getUsers(
+                $user_arr[$sort_by], true
+            ); // user_arr - массив для сортировки;
+            $_SESSION['get'] = '';
+        } else {
+            $res = $users->getUsers($user_arr[$sort_by]);
+            $_SESSION['get'] = $sort_by;
+        }
+    } else {
+        $res = $users->getUsers($user_arr[$sort_by]);
+        $_SESSION['get'] = $sort_by;
     }
-    // $user->deleteUser('localhost', 'root', '', 'new_user_db', 'qaweeds@gmail.com');
+} else {
+    $res = $users->getUsers();
+}
+
+if (isset($_GET['reduser']) and !empty($_GET['reduser'])) {
+    $id = $_GET['reduser'];
+    $user_info = $users->getUser($id);
+    $_SESSION['user'] = $user_info;
+
+    header("Location: " .  BASE_URL . "user/red_user.php");
+}
+
+if (isset($_GET['deluser']) and !empty($_GET['deluser'])) {
+    $id = $_GET['deluser'];
+    $users->deleteUser($id);
+
+    header("Location: " .  BASE_URL . "user/");
 }
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Add new user</title>
-</head>
+<?php include_once BASE_DIR . "header.php" ?>
 <body>
-<a href="users.php">К списку пользователей</a>
+<!-- HEADER END-->
+<?php require_once BASE_DIR . "header-logo-bar.php"; ?>
+<!-- LOGO HEADER END-->
+<?php require_once BASE_DIR . "header-menu.php"; ?>
+<div class="content-wrapper">
+    <div class="container">
+        <div class='wait-bar'></div>
+        <div class="row">
+            <div class="pull-left">
+                <a class="btn btn-default add_link" href="<?php echo BASE_URL ?>user/add_user.php">
+                    <i class="fa fa-pencil"></i>Добавить нового пользователя
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="table-responsive">
+                    <table
+                        class="table table-striped table-bordered table-hover users_table">
+                        <tr>
+                            <th class="wpr7 align-c"
+                                onclick="location.href='?sort=0'">ID
+                            </th>
+                            <th class="wpr10 align-c"
+                                onclick="location.href='?sort=1'">Name
+                            </th>
+                            <th class="align-c"
+                                onclick="location.href='?sort=2'">Last Name
+                            </th>
+                            <th class="align-c"
+                                onclick="location.href='?sort=3'">Email
+                            </th>
+                            <th class="wpr10 align-c"
+                                onclick="location.href='?sort=4'">Phone
+                            </th>
+                            <th class="align-c"
+                                onclick="location.href='?sort=5'">Created at
+                            </th>
+                            <th class="align-c">Action</th>
+                        </tr>
+                        <?php
+                        foreach ($res as $value) {
+                            ?>
+                            <tr>
+                                <td class="align-c"><?= $value['id'] ?></td>
+                                <td><?= $value['firstname'] ?></td>
+                                <td><?= $value['lastname'] ?></td>
+                                <td><?= $value['email'] ?></td>
+                                <td><?= $value['phone'] ?></td>
+                                <td><?= $value['created_at'] ?></td>
+                                <td class="align-c">
+                                    <a class="btn btn_del mr10" href="<?php echo BASE_URL ?>user/index.php?deluser=<?= $value['id'] ?>">Удалить</a>
+                                    <a class="btn btn-primary mr10" href="<?php echo BASE_URL ?>user/index.php?reduser=<?= $value['id'] ?>">Редактировать</a>
+                                </td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php require_once BASE_DIR . "footer.php"; ?>
 
-<form name="add_form" action="" method="post">
-    <h2>Введите данные дял добавления</h2>
-
-    <p>* - required fields</p>
-
-    <p>First name*</p>
-    <input type="text" name='f_name'>
-
-    <p>Last name*</p>
-    <input type="text" name='l_name'>
-
-    <p>Email*</p>
-    <input type="text" name='email'>
-
-    <p>Password*</p>
-    <input type="password" name='pass'>
-
-    <p>Phone</p>
-    <input type="text" name='phone'>
-
-    <p><input type="submit"></p>
-</form>
-<?php
-if (isset($res)) {
-    echo ($res == 1) ? "User has been added successfully.<br>Redirect in 5 sec."
-        : 'User has not been added. Email is occupied';
-}
-?>
-</body>
-</html>
