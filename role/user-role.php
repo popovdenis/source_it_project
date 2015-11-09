@@ -36,7 +36,7 @@ $userObj = new User();
                         <?php
                         foreach ($roleObj->getRoles('role') as $index => $role) {
                             ?>
-                            <option value="<?php echo $role[1] ?>"><?php echo $role[1] ?></option>
+                            <option value="<?php echo $role['role'] ?>"><?php echo $role['role'] ?></option>
                             <br>
                         <?php
                         }
@@ -49,8 +49,8 @@ $userObj = new User();
                     foreach ($userObj->getUsers() as $u) {
                         if ($u['firstname']." ".$u['lastname'] == $_POST['user']) {
                             foreach ($roleObj->getRoles('role') as $r) {
-                                if (array ($r[1]) == $_POST['role']) {
-                                    echo '<div class="alert alert-success">' .$roleObj->setUsersByRole($u['id'],$r[0]). '</div>';
+                                if (array ($r['role']) == $_POST['role']) {
+                                    echo '<div class="alert alert-success">' .$roleObj->setUsersByRole($u['id'],$r['id']). '</div>';
                                 }
                             }
                         }

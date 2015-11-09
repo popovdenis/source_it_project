@@ -21,7 +21,7 @@ putArticle ­ обновить статью
 deleteArticle ­ удалить статью
  */
 include_once "../_autoload.php";
-
+date_default_timezone_set('UTC');
 class Article
 {
     public $id;
