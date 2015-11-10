@@ -1,3 +1,6 @@
+<?php
+    include_once "../../_autoload.php";
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,9 +23,9 @@
 </nav>
 <div class="container">
     <?php
-    include_once("../defines.php");
-    require_once BASE_DIR . "/dao/ImplQuestionDao.php";
-    require_once BASE_DIR . "/dao/ImplAnswerDao.php";
+
+    require_once BASE_DIR . "onlinetest/dao/ImplQuestionDao.php";
+    require_once BASE_DIR . "onlinetest/dao/ImplAnswerDao.php";
 
     session_start();
 

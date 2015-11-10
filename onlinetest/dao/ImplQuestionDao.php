@@ -1,8 +1,8 @@
 <?php
-
-require_once BASE_DIR . "/model/Question.php";
-require_once BASE_DIR . "/connectionManager/DB_connection.php";
-require_once BASE_DIR . "/dao/QuestionsDao.php";
+include_once "../../_autoload.php";
+require_once BASE_DIR . "onlinetest/model/Question.php";
+require_once BASE_DIR . "onlinetest/connectionManager/DB_connection.php";
+require_once BASE_DIR . "onlinetest/dao/QuestionsDao.php";
 
 /**
  * @author Maria Ostashevskaya

@@ -1,6 +1,5 @@
 .idea/
 config.ini
-.idea/
 *.iml
 out/
 target/

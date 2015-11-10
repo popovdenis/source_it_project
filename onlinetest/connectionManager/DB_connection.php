@@ -1,6 +1,4 @@
 <?php
-
-
 class DB_connection
 {
     public static function db_connect($hostname = 'localhost', $username = 'root', $password = 'root',
