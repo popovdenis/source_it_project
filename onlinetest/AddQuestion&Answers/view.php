@@ -9,7 +9,6 @@
     <meta charset="utf-8"/>
 </head>
 <body class="deep-orange lighten-5">
-
 <nav>
     <div class="nav-wrapper red lighten-1">
         <a href="#" class="brand-logo right">Online-test</a>
@@ -18,18 +17,12 @@
         </ul>
     </div>
 </nav>
-
 <div class="container row">
-
     <form action="controller.php" method="post" class="col s12">
-
-
         <h6 class=' cyan-text text-darken-3 '> Напишите вопрос: <input type="text" name="question"/></h6>
         <h6 class=' cyan-text text-darken-3 '> Вводите варианты ответов , напротив правильных вариантов поставте
             галочку и нажмите "отправить"</h6>
-
         <div class="row">
-
             <div class="row">
                 <div class="input-field col s6">
                     <i class="material-icons prefix">mode_edit</i>
@@ -41,11 +34,8 @@
                     <label for="test1"></label>
                 </p>
             </div>
-
         </div>
-
         <div class="row">
-
             <div class="row">
                 <div class="input-field col s6">
                     <i class="material-icons prefix">mode_edit</i>
@@ -57,11 +47,8 @@
                     <label for="test2"></label>
                 </p>
             </div>
-
         </div>
-
         <div class="row">
-
             <div class="row">
                 <div class="input-field col s6">
                     <i class="material-icons prefix">mode_edit</i>
@@ -73,11 +60,8 @@
                     <label for="test3"></label>
                 </p>
             </div>
-
         </div>
-
         <div class="row">
-
             <div class="row">
                 <div class="input-field col s6">
                     <i class="material-icons prefix">mode_edit</i>
@@ -89,11 +73,8 @@
                     <label for="test4"></label>
                 </p>
             </div>
-
         </div>
-
         <div class="row">
-
             <div class="row">
                 <div class="input-field col s6">
                     <i class="material-icons prefix">mode_edit</i>
@@ -105,9 +86,7 @@
                     <label for="test5"></label>
                 </p>
             </div>
-
         </div>
-
         <button class='waves-effect waves-teal btn-large' type="submit">
             <i class='material-icons left large'>input</i> Отправить
         </button>

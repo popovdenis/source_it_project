@@ -1,12 +1,12 @@
 <?php
-
-
 class DB_connection
 {
-    public static function db_connect($hostname = 'localhost', $username = 'root', $password = 'root',
-                               $dbName = 'source_it_project', $port = 3306)
+    public static function db_connect()
     {
-        $connect = mysqli_connect($hostname, $username, $password, $dbName, $port);
+        $config = Config::getConfig();
+        $connect = mysqli_connect(
+            $config['host'], $config['username'], $config['password'], $config['database'], $config['port']
+        );
         if ($connect) {
             return $connect;
         } else {

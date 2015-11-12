@@ -1,3 +1,40 @@
+<?php
+/**
+ *
+ */
+    include_once "../../_autoload.php";
+
+    require_once BASE_DIR . "onlinetest/dao/ImplQuestionDao.php";
+    require_once BASE_DIR . "onlinetest/dao/ImplAnswerDao.php";
+
+    session_start();
+
+    $questionDao = new QuestionDaoImpl();
+    $answerDao = new AnswerDaoImpl();
+
+    $result = 0; // Переменная для суммы ответов
+    $count = 0;
+
+    if (!isset($_SESSION['questionsIds'])) {
+        header("Location: " . BASE_URL . 'onlinetest/startTest/model.php');
+    }
+
+    $answersCorrect = $answerDao->getAnswersByQuestionsIds($_SESSION['questionsIds']);
+    $countQuestions = count($_SESSION['questionsIds']);//колличество вопросов
+    $countTrueAnswer = count($answersCorrect);//колличество правильных ответов
+
+    if (isset($_SESSION['answers'])) {
+        foreach ($_SESSION['answers'] as $valArray) {
+            foreach ($valArray as $valTrueAnswer) {
+                if ($valTrueAnswer == 1) {
+                    $result++;
+                }
+            }
+        }
+    }
+    unset($_SESSION['answers']);
+    setcookie(session_name('answers'), '');
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,38 +56,6 @@
     </div>
 </nav>
 <div class="container">
-    <?php
-    include_once("../defines.php");
-    require_once BASE_DIR . "/dao/ImplQuestionDao.php";
-    require_once BASE_DIR . "/dao/ImplAnswerDao.php";
-
-    session_start();
-
-    $questionDao = new QuestionDaoImpl();
-    $answerDao = new AnswerDaoImpl();
-
-    $result = 0; // Переменная для суммы ответов
-    $count = 0;
-
-    $answersCorrect = $answerDao->getAllAnswers();
-    $countQuestions = count($questionDao->getAllQuestions());//колличество вопросов
-    $countTrueAnswer = count($answerDao->getAllAnswers());//колличество правильных ответов
-
-    //    print_r($_SESSION['answers']);
-
-    if (isset($_SESSION['answers'])) {
-        foreach ($_SESSION['answers'] as $valArray) {
-            foreach ($valArray as $valTrueAnswer) {
-                if ($valTrueAnswer == 1) {
-                    $result++;
-                }
-            }
-        }
-    }
-    unset($_SESSION['answers']);
-    setcookie(session_name('answers'), '');
-    ?>
-
     <h3 class=' cyan-text text-darken-3 center'>Ваш результат: <?php echo $result ?>
         из <?php echo $countTrueAnswer ?>  </h3>
 

@@ -1,8 +1,8 @@
 <?php
-
-require_once BASE_DIR . "/model/Question.php";
-require_once BASE_DIR . "/connectionManager/DB_connection.php";
-require_once BASE_DIR . "/dao/QuestionsDao.php";
+include_once "../../_autoload.php";
+require_once BASE_DIR . "onlinetest/model/Question.php";
+require_once BASE_DIR . "onlinetest/connectionManager/DB_connection.php";
+require_once BASE_DIR . "onlinetest/dao/QuestionsDao.php";
 
 /**
  * @author Maria Ostashevskaya
@@ -23,22 +23,42 @@ class QuestionDaoImpl implements QuestionsDao
             $text = $row[1];
             $question = new Question($id, $text);
         }
+
         return $question;
     }
 
-    public function getAllQuestions()  //получить список вопросов
+    public function getAllQuestions($limit = 0)  //получить список вопросов
     {
         $sql = "SELECT * FROM `question`";
+        if (!empty($limit)) {
+            $sql .= " LIMIT " . $limit;
+        }
 
         $query_result = mysqli_query(DB_connection::db_connect(), $sql);
 
-        $questions = null;
-        while ($row = mysqli_fetch_array($query_result)) {
-            $id = $row[0];
-            $text = $row[1];
-
-            $questions[] = new Question($id, $text);
+        $questions = array();
+        while ($row = mysqli_fetch_assoc($query_result)) {
+            $questions[] = new Question($row['id'], $row['question']);
         }
+
+        return $questions;
+    }
+
+    public function getQuestionsByIds($questionsIds)
+    {
+        if (empty($questionsIds)) {
+            return array();
+        }
+
+        $sql = "SELECT * FROM `question` WHERE id IN (" . implode(',', $questionsIds) . ")";
+
+        $query_result = mysqli_query(DB_connection::db_connect(), $sql);
+
+        $questions = array();
+        while ($row = mysqli_fetch_assoc($query_result)) {
+            $questions[] = new Question($row['id'], $row['question']);
+        }
+
         return $questions;
     }
 
@@ -81,7 +101,8 @@ class QuestionDaoImpl implements QuestionsDao
 
     public function getAnswersByQuestion($id)//получить список ответов на вопрос
     {
-        $sql = "SELECT * FROM `answer`
+        $sql
+            = "SELECT * FROM `answer`
         INNER JOIN `question_answer`
         ON `answer`.`id` = `question_answer`.`answer_id`
         INNER JOIN `question`
@@ -100,6 +121,7 @@ class QuestionDaoImpl implements QuestionsDao
 
                 $arrResult[] = new Answer($text, $id);
             }
+
             return $arrResult;
         }
     }
@@ -114,6 +136,7 @@ class QuestionDaoImpl implements QuestionsDao
         while ($row = mysqli_fetch_array($query_result)) {
             $id = $row[0];
         }
+
         return $id;
     }
 

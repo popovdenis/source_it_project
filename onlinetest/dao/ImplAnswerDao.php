@@ -1,14 +1,14 @@
 <?php
-require_once BASE_DIR . "/model/Answer.php";
-require_once BASE_DIR . "/connectionManager/DB_connection.php";
-require_once BASE_DIR . "/dao/AnswersDao.php";
+include_once "../../_autoload.php";
+require_once BASE_DIR . "onlinetest/model/Answer.php";
+require_once BASE_DIR . "onlinetest/connectionManager/DB_connection.php";
+require_once BASE_DIR . "onlinetest/dao/AnswersDao.php";
 
 /**
  * @author Maria Ostashevskaya
  */
 class AnswerDaoImpl implements AnswersDao
 {
-
     public function getAnswer($id)  //получить ответ
     {
 
@@ -22,23 +22,43 @@ class AnswerDaoImpl implements AnswersDao
             $text = $row[1];
             $answer = new Answer($id, $text);
         }
+
         return $answer;
     }
 
     public function getAllAnswers()  //получить список ответов
     {
-        $sql = "SELECT `answer` FROM `answer` WHERE `trueAnswer`='1'";
+        $sql = "SELECT `id`, `answer`, `trueAnswer` FROM `answer` WHERE `trueAnswer`='1'";
 
         $query_result = mysqli_query(DB_connection::db_connect(), $sql);
 
-        $answers = null;
-        while ($row = mysqli_fetch_array($query_result)) {
-            $id = $row[0];
-            $text = $row[1];
-
-            $answers[] = new Answer($id, $text);
+        $answers = array();
+        while ($row = mysqli_fetch_assoc($query_result)) {
+            $answers[] = new Answer($row['id'], $row['answer'], $row['trueAnswer']);
         }
+
         return $answers;
+    }
+
+    public function getAnswersByQuestionsIds($questionsIds)
+    {
+        $query = "SELECT
+                a.id
+            FROM `answer` a
+              INNER JOIN question_answer qa ON (qa.answer_id = a.id)
+              INNER JOIN question q ON (q.id = qa.question_id)
+            WHERE a.trueAnswer = '1'
+            AND q.id IN (" . implode(',', $questionsIds) . ")";
+
+        $query_result = mysqli_query(DB_connection::db_connect(), $query);
+
+        $answers = array();
+        while ($row = mysqli_fetch_assoc($query_result)) {
+            $answers[] = $row['id'];
+        }
+
+        return $answers;
+
     }
 
     public function saveAnswer($answer, $trueAnswer) //сохранить ответ
@@ -77,6 +97,7 @@ class AnswerDaoImpl implements AnswersDao
         while ($row = mysqli_fetch_array($query_result)) {
             $id = $row[0];
         }
+
         return $id;
     }
 
@@ -90,6 +111,7 @@ class AnswerDaoImpl implements AnswersDao
         while ($row = mysqli_fetch_array($query_result)) {
             $trueAnswer = $row[0];
         }
+
         return $trueAnswer;
 
     }
