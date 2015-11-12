@@ -1,0 +1,4 @@
+CREATE TABLE tags(
+	`id` INT(5) PRIMARY KEY AUTO_INCREMENT,
+	  `tag` VARCHAR(50)
+	);
