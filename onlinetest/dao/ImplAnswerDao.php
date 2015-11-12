@@ -28,13 +28,13 @@ class AnswerDaoImpl implements AnswersDao
 
     public function getAllAnswers()  //получить список ответов
     {
-        $sql = "SELECT `id`, `answer`, `trueAnswer` FROM `answer` WHERE `trueAnswer`='1'";
+        $sql = "SELECT `id`, `answer`, `trueAnswer` FROM `answer` WHERE `trueAnswer`='1' ORDER BY id";
 
         $query_result = mysqli_query(DB_connection::db_connect(), $sql);
 
         $answers = array();
         while ($row = mysqli_fetch_assoc($query_result)) {
-            $answers[] = new Answer($row['id'], $row['answer'], $row['trueAnswer']);
+            $answers[] = new Answer($row['answer'], $row['id'], $row['trueAnswer']);
         }
 
         return $answers;

@@ -9,7 +9,6 @@ require_once BASE_DIR . "onlinetest/dao/QuestionsDao.php";
  */
 class QuestionDaoImpl implements QuestionsDao
 {
-
     public function getQuestion($id)  //получить вопрос
     {
 
@@ -27,9 +26,14 @@ class QuestionDaoImpl implements QuestionsDao
         return $question;
     }
 
-    public function getAllQuestions($limit = 0)  //получить список вопросов
+    public function getAllQuestions($limit = 0, $random = true)  //получить список вопросов
     {
         $sql = "SELECT * FROM `question`";
+        if ($random) {
+            $sql .= " ORDER BY RAND() ";
+        } else {
+            $sql .= " ORDER BY question ";
+        }
         if (!empty($limit)) {
             $sql .= " LIMIT " . $limit;
         }
@@ -102,7 +106,7 @@ class QuestionDaoImpl implements QuestionsDao
     public function getAnswersByQuestion($id)//получить список ответов на вопрос
     {
         $sql
-            = "SELECT * FROM `answer`
+            = "SELECT `answer`.id, `answer`.answer, `answer`.trueAnswer FROM `answer`
         INNER JOIN `question_answer`
         ON `answer`.`id` = `question_answer`.`answer_id`
         INNER JOIN `question`
@@ -110,16 +114,11 @@ class QuestionDaoImpl implements QuestionsDao
         WHERE `question_id`='$id';";
 
         $query_result = mysqli_query(DB_connection::db_connect(), $sql);
-
         if ($query_result) {
 
-            $arrResult = null;
-
-            while ($row = mysqli_fetch_array($query_result)) {
-                $id = $row[0];
-                $text = $row[1];
-
-                $arrResult[] = new Answer($text, $id);
+            $arrResult = array();
+            while ($row = mysqli_fetch_assoc($query_result)) {
+                $arrResult[] = new Answer($row['answer'], $row['id'], $row['trueAnswer']);
             }
 
             return $arrResult;
