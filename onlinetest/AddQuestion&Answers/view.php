@@ -1,6 +1,3 @@
-<?php
-    include_once "../../_autoload.php";
-?>
 <!DOCTYPE html>
 <html>
 <head>

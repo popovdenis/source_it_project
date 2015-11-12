@@ -1,10 +1,10 @@
 <?php
-include_once "../../_autoload.php";
 
+header("Content-type: text/html; charset=utf-8");
 if (!isset($_POST['test'])) {
     $title = 'Пройдите тест!';
 } else {
-    header('Location: ' . BASE_URL . 'onlinetest/startTest/model.php');
+    header('Location: ../startTest/model.php');
 }
 ?>
 <!DOCTYPE html>

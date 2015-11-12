@@ -1,6 +1,3 @@
-<?php
-include_once "../../_autoload.php";
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,10 +24,11 @@ include_once "../../_autoload.php";
      * Add question and answers in DB.
      */
 
-    require_once BASE_DIR . "onlinetest/dao/ImplQuestionDao.php";
-    require_once BASE_DIR . "onlinetest/dao/ImplAnswerDao.php";
+    include_once("../defines.php");
+    require_once BASE_DIR . "/dao/ImplQuestionDao.php";
+    require_once BASE_DIR . "/dao/ImplAnswerDao.php";
 
-    $currentQuestion = null;
+    $currentQuestion;
 
     $newQuestion = new QuestionDaoImpl();
 

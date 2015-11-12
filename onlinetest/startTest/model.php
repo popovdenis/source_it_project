@@ -1,40 +1,3 @@
-<?php
-include_once "../../_autoload.php";
-require_once BASE_DIR . "onlinetest/dao/ImplQuestionDao.php";
-require_once BASE_DIR . "onlinetest/dao/ImplAnswerDao.php";
-
-$questionDao = new QuestionDaoImpl();
-$answerDao = new AnswerDaoImpl();
-
-session_start();
-
-$questions = $questionDao->getAllQuestions();
-//    print_r($questions);
-$questionsCounter = 0;
-$countWrightAnswers = 0;
-
-$answer = $_POST['answer'];
-
-//  unset($_SESSION['answers']);
-if (!isset($_SESSION['answers'])) {
-
-    $_SESSION['answers'] = [];
-    $_SESSION['questionsCounter'] = 0;
-}
-$questionsCounter = $_SESSION['questionsCounter'];
-
-$_SESSION['answers'][] = $answer;
-$_SESSION['questionsCounter']++;
-
-if (!isset($questions[$questionsCounter])) {
-    header('Location: controller.php');
-
-}
-$title = $questions[$questionsCounter];
-
-$countQuestions = count($questionDao->getAllQuestions());//колличество вопросов
-$countTest = round(($questionsCounter * 100) / $countQuestions);
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,14 +20,52 @@ $countTest = round(($questionsCounter * 100) / $countQuestions);
     </div>
 </nav>
 <div class="container">
+
+    <?php
+    include_once("../defines.php");
+    require_once BASE_DIR . "/dao/ImplQuestionDao.php";
+    require_once BASE_DIR . "/dao/ImplAnswerDao.php";
+    $questionDao = new QuestionDaoImpl();
+    $answerDao = new AnswerDaoImpl();
+
+    session_start();
+
+    $questions = $questionDao->getAllQuestions();
+    //    print_r($questions);
+    $questionsCounter = 0;
+    $countWrightAnswers = 0;
+
+    if (isset($_POST['answer']) && !empty($_POST['answer'])) {
+        $answer = $_POST['answer'];
+
+        //  unset($_SESSION['answers']);
+        if (!isset($_SESSION['answers'])) {
+
+            $_SESSION['answers'] = [];
+            $_SESSION['questionsCounter'] = 0;
+        }
+        $questionsCounter = $_SESSION['questionsCounter'];
+
+        $_SESSION['answers'][] = $answer;
+        $_SESSION['questionsCounter']++;
+
+        if (!isset($questions[$questionsCounter])) {
+            header('Location: controller.php');
+
+        }
+    }
+    $title = $questions[$questionsCounter];
+
+    $countQuestions = count($questionDao->getAllQuestions());//колличество вопросов
+    $countTest = round(($questionsCounter * 100) / $countQuestions); ?>
+
     <p class='cyan-text text-darken-2 right'><b>Пройдено <?php echo $countTest; ?> %</b></p>
 
     <br><br><h5 class=' cyan-text text-darken-3 '><?php echo $title->getQuestion(); ?></h5>
 
     <form action="model.php" method="post">
         <br><input type="hidden" name="q" value="<?php echo $questionsCounter; ?>">
-        <?php
-        foreach ($questionDao->getAnswersByQuestion($title->getId()) as $valAnswerByQuestion) {
+        <?php foreach ($questionDao->getAnswersByQuestion($title->getId()) as $valAnswerByQuestion) {
 
             $countWrightAnswers++;
             $trueOrFalse = $answerDao->getTrueAnswer($valAnswerByQuestion->getId());
@@ -76,7 +77,6 @@ $countTest = round(($questionsCounter * 100) / $countQuestions);
             echo "<br></label><Br>";
 
         }
-
         if (($questionsCounter + 1) == $countQuestions) {
             echo " <Br><Br><button class='waves-effect waves-teal btn-large' type='submit'>
             <i class='material-icons left large'>done_all</i> Узнать результат
