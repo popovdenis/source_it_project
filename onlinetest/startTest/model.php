@@ -24,31 +24,26 @@ if (!isset($_SESSION['questionsIds'])) {
     $questionsList = $questionDao->getQuestionsByIds($_SESSION['questionsIds']);
 }
 
-$questionsCounter = 0;
+if (!isset($_SESSION['answers'])) {
+    $_SESSION['answers'] = [];
+    $_SESSION['questionsCounter'] = 0;
+}
 $countWrightAnswers = 0;
+$questionsCounter = $_SESSION['questionsCounter'];
 
 if (isset($_POST['answer']) && !empty($_POST['answer'])) {
     $answer = $_POST['answer'];
 
-    if (!isset($_SESSION['answers'])) {
-        $_SESSION['answers'] = [];
-        $_SESSION['questionsCounter'] = 0;
-    }
+    $questionsCounter++;
 
-    $questionsCounter = $_SESSION['questionsCounter'];
-
-    $_SESSION['answers'][] = $answer;
-    $_SESSION['questionsCounter']++;
+    $_SESSION['answers'] = array_merge($_SESSION['answers'], $answer);
+    $_SESSION['questionsCounter'] = $questionsCounter;
 
     if (!isset($questionsList[$questionsCounter])) {
         header('Location: controller.php');
-
-    }
-} else {
-    if (isset($_SESSION['answers'])) {
-        unset($_SESSION['answers']);
     }
 }
+
 $title = $questionsList[$questionsCounter];
 
 $countQuestions = count($questionsList);//колличество вопросов
@@ -66,7 +61,6 @@ $countTest = round(($questionsCounter * 100) / $countQuestions);
 
 </head>
 <body class="deep-orange lighten-5">
-
 <nav>
     <div class="nav-wrapper red lighten-1">
         <a href="#" class="brand-logo right">Online-test</a>
@@ -76,20 +70,16 @@ $countTest = round(($questionsCounter * 100) / $countQuestions);
     </div>
 </nav>
 <div class="container">
-
     <p class='cyan-text text-darken-2 right'><b>Пройдено <?php echo $countTest; ?> %</b></p>
-
     <br><br><h5 class=' cyan-text text-darken-3 '><?php echo $title->getQuestion(); ?></h5>
-
     <form action="model.php" method="post">
         <br><input type="hidden" name="q" value="<?php echo $questionsCounter; ?>">
         <?php
         foreach ($questionDao->getAnswersByQuestion($title->getId()) as $valAnswerByQuestion) {
-
             $countWrightAnswers++;
             $trueOrFalse = $answerDao->getTrueAnswer($valAnswerByQuestion->getId());
 
-            echo "<br><input type='checkbox' name = 'answer[]' value='$trueOrFalse' id='$countWrightAnswers'>";
+            echo "<br><input type='checkbox' name = 'answer[]' value='" . $valAnswerByQuestion->getId() . "' id='$countWrightAnswers'>";
 
             echo "<label for='$countWrightAnswers'>";
             print $valAnswerByQuestion->getAnswer();
@@ -107,7 +97,6 @@ $countTest = round(($questionsCounter * 100) / $countQuestions);
         }
         ?>
     </form>
-
 </div>
 </body>
 </html>

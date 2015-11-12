@@ -40,27 +40,6 @@ class AnswerDaoImpl implements AnswersDao
         return $answers;
     }
 
-    public function getAnswersByQuestionsIds($questionsIds)
-    {
-        $query = "SELECT
-                a.id
-            FROM `answer` a
-              INNER JOIN question_answer qa ON (qa.answer_id = a.id)
-              INNER JOIN question q ON (q.id = qa.question_id)
-            WHERE a.trueAnswer = '1'
-            AND q.id IN (" . implode(',', $questionsIds) . ")";
-
-        $query_result = mysqli_query(DB_connection::db_connect(), $query);
-
-        $answers = array();
-        while ($row = mysqli_fetch_assoc($query_result)) {
-            $answers[] = $row['id'];
-        }
-
-        return $answers;
-
-    }
-
     public function saveAnswer($answer, $trueAnswer) //сохранить ответ
     {
 

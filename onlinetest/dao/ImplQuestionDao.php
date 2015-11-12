@@ -126,6 +126,22 @@ class QuestionDaoImpl implements QuestionsDao
         }
     }
 
+    public function getCorrectCountQuestionsByAnswers($questionsIds, $answersIds)
+    {
+        $query = "SELECT qa.question_id
+          FROM question_answer qa
+            INNER JOIN answer a ON (a.id = qa.answer_id)
+          WHERE qa.question_id in (" . implode(',', $questionsIds) . ")
+          AND qa.answer_id in (" . implode(',', $answersIds) . ")
+          AND a.trueAnswer = 1
+          GROUP BY qa.question_id";
+
+        $query_result = mysqli_query(DB_connection::db_connect(), $query);
+
+        return count(mysqli_fetch_all($query_result));
+
+    }
+
     public function getQuestionId($question)
     {
         $sql = "SELECT `id` FROM `question` WHERE `question`='$question'";

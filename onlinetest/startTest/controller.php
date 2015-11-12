@@ -2,38 +2,30 @@
 /**
  *
  */
-    include_once "../../_autoload.php";
 
-    require_once BASE_DIR . "onlinetest/dao/ImplQuestionDao.php";
-    require_once BASE_DIR . "onlinetest/dao/ImplAnswerDao.php";
+include_once "../../_autoload.php";
 
-    session_start();
+require_once BASE_DIR . "onlinetest/dao/ImplQuestionDao.php";
+require_once BASE_DIR . "onlinetest/dao/ImplAnswerDao.php";
 
-    $questionDao = new QuestionDaoImpl();
-    $answerDao = new AnswerDaoImpl();
+session_start();
 
-    $result = 0; // Переменная для суммы ответов
-    $count = 0;
+if (!isset($_SESSION['questionsIds'])) {
+    header("Location: " . BASE_URL . 'onlinetest/startTest/model.php');
+}
 
-    if (!isset($_SESSION['questionsIds'])) {
-        header("Location: " . BASE_URL . 'onlinetest/startTest/model.php');
-    }
+$questionDao = new QuestionDaoImpl();
+$answerDao = new AnswerDaoImpl();
 
-    $answersCorrect = $answerDao->getAnswersByQuestionsIds($_SESSION['questionsIds']);
-    $countQuestions = count($_SESSION['questionsIds']);//колличество вопросов
-    $countTrueAnswer = count($answersCorrect);//колличество правильных ответов
+// правильные ответы согласно БД
+$countCorrectQuestions = $questionDao
+        ->getCorrectCountQuestionsByAnswers($_SESSION['questionsIds'], $_SESSION['answers']);
 
-    if (isset($_SESSION['answers'])) {
-        foreach ($_SESSION['answers'] as $valArray) {
-            foreach ($valArray as $valTrueAnswer) {
-                if ($valTrueAnswer == 1) {
-                    $result++;
-                }
-            }
-        }
-    }
-    unset($_SESSION['answers']);
-    setcookie(session_name('answers'), '');
+//колличество вопросов
+$countAllQuestions = count($_SESSION['questionsIds']);
+
+unset($_SESSION['answers']);
+setcookie(session_name('answers'), '');
 ?>
 <!DOCTYPE html>
 <html>
@@ -56,8 +48,9 @@
     </div>
 </nav>
 <div class="container">
-    <h3 class=' cyan-text text-darken-3 center'>Ваш результат: <?php echo $result ?>
-        из <?php echo $countTrueAnswer ?>  </h3>
+    <h3 class=' cyan-text text-darken-3 center'>
+        Ваш результат: <?php echo $countCorrectQuestions ?> из <?php echo $countAllQuestions ?>
+    </h3>
 
     <div class="collection col l6">
         <a class='  collection-item cyan-text text-darken-1 red lighten-5 waves-effect waves-teal'

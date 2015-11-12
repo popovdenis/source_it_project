@@ -2,6 +2,16 @@
 include_once "../../_autoload.php";
 
 header("Content-type: text/html; charset=utf-8");
+
+session_start();
+
+if (isset($_SESSION['answers'])) {
+    unset($_SESSION['answers']);
+}
+if (isset($_SESSION['questionsIds'])) {
+    unset($_SESSION['questionsIds']);
+}
+
 if (!isset($_POST['test'])) {
     $title = 'Пройдите тест!';
 } else {
