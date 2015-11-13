@@ -21,18 +21,10 @@ putArticle ­ обновить статью
 deleteArticle ­ удалить статью
  */
 include_once "../_autoload.php";
-<<<<<<< HEAD
-date_default_timezone_set('UTC');
-class Article
-=======
-
 class Article extends Controller
->>>>>>> 08c2b8aaf40919eb452fb04954d39035f4c12235
 {
     public $id;
-
     protected static $menuOption = 'article';
-
     public function postArticle($title_use, $description_use) // сохранить статью
     {
         $query = "INSERT INTO article (`title`,`description`,`created_at`) VALUES (:title, :description, :createdAt)";
@@ -42,11 +34,8 @@ class Article extends Controller
             ->bindValue(':description', $this->db->escape($description_use))
             ->bindValue(':createdAt', (new DateTime())->format('Y-m-d H:i:s'))
             ->execute();
-
         return true;
-
     }
-
     public function getArticle($get) // получить статью
     {
         $this->id = $get;
@@ -55,20 +44,16 @@ class Article extends Controller
             ->prepare($query)
             ->bindValue(':id', $this->db->escape($this->id), DataBase::PARAM_INT)
             ->execute();
-
         return $this->db->fetchAll();
     }
-
     public function getArticles() // получение списков статей
     {
         $query = "SELECT * FROM article";
         $this->db
             ->prepare($query)
             ->execute();
-
         return $this->db->fetchAll();
     }
-
     public function putArticle($id, $title, $description) // обновить статью
     {
         $query = "UPDATE article SET `title`= :title, `description` = :description WHERE `id` = :id";
@@ -78,11 +63,8 @@ class Article extends Controller
             ->bindValue(':description', $this->db->escape($description))
             ->bindValue(':id', $this->db->escape($id), DataBase::PARAM_INT)
             ->execute();
-
         return true;
     }
-
-
     public function deleteArticle($id) // удалить статью
     {
         $query = "DELETE FROM article WHERE id = :id";
@@ -90,11 +72,9 @@ class Article extends Controller
             ->prepare($query)
             ->bindValue(':id', $this->db->escape($id), DataBase::PARAM_INT)
             ->execute();
-
         return true;
     }
 }
-
 //$article = new Article('Bogdan','Gutenev');
 //echo $article->title;
 //echo $article->description;
