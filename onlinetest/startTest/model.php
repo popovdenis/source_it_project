@@ -10,27 +10,19 @@ $answerDao = new AnswerDaoImpl();
 session_start();
 
 $questionsList = array();
-if (!isset($_SESSION['questionsIds'])) {
-    $questions = $questionDao->getAllQuestions(Config::getConfig()['questionsCount']);
-    $questionsIds = array();
-    if (!empty($questions)) {
-        $questionsList = $questions;
-        foreach ($questions as $question) {
-            $questionsIds[] = $question->getId();
-        }
-    }
-    $_SESSION['questionsIds'] = $questionsIds;
+if (!isset($_SESSION['questions'])) {
+    $questionsList = $questionDao->getAllQuestions(Config::getConfig()['questionsCount']);
+    $_SESSION['questions'] = $questionsList;
 } else {
-    $questionsList = $questionDao->getQuestionsByIds($_SESSION['questionsIds']);
+    $questionsList = $_SESSION['questions'];
 }
 
 if (!isset($_SESSION['answers'])) {
     $_SESSION['answers'] = [];
     $_SESSION['questionsCounter'] = 0;
 }
-$countWrightAnswers = 0;
-$questionsCounter = $_SESSION['questionsCounter'];
 
+$questionsCounter = $_SESSION['questionsCounter'];
 if (isset($_POST['answer']) && !empty($_POST['answer'])) {
     $answer = $_POST['answer'];
 
@@ -44,7 +36,7 @@ if (isset($_POST['answer']) && !empty($_POST['answer'])) {
     }
 }
 
-$title = $questionsList[$questionsCounter];
+$currentQuestion = $questionsList[$questionsCounter];
 
 $countQuestions = count($questionsList);//колличество вопросов
 $countTest = round(($questionsCounter * 100) / $countQuestions);
@@ -71,20 +63,22 @@ $countTest = round(($questionsCounter * 100) / $countQuestions);
 </nav>
 <div class="container">
     <p class='cyan-text text-darken-2 right'><b>Пройдено <?php echo $countTest; ?> %</b></p>
-    <br><br><h5 class=' cyan-text text-darken-3 '><?php echo $title->getQuestion(); ?></h5>
+    <br><br><h5 class=' cyan-text text-darken-3 '><?php echo $currentQuestion->getQuestion(); ?></h5>
     <form action="model.php" method="post">
-        <br><input type="hidden" name="q" value="<?php echo $questionsCounter; ?>">
-        <?php
-        foreach ($questionDao->getAnswersByQuestion($title->getId()) as $valAnswerByQuestion) {
-            $countWrightAnswers++;
-            $trueOrFalse = $answerDao->getTrueAnswer($valAnswerByQuestion->getId());
-
-            echo "<br><input type='checkbox' name = 'answer[]' value='" . $valAnswerByQuestion->getId() . "' id='$countWrightAnswers'>";
-
-            echo "<label for='$countWrightAnswers'>";
-            print $valAnswerByQuestion->getAnswer();
-            echo "<br></label><Br>";
-
+        <b>Question: <?php echo $currentQuestion->getId() ?></b><br />
+        <input type="hidden" name="q" value="<?php echo $questionsCounter; ?>">
+        <?php foreach ($questionDao->getAnswersByQuestion($currentQuestion->getId()) as $index => $valAnswerByQuestion) { ?>
+            <br>
+            <span>answer: <?php echo $valAnswerByQuestion->getId() ?></span>
+            <input type='checkbox' name='answer[]' value='<?php echo $valAnswerByQuestion->getId() ?>'
+                   id='<?php echo $index ?>'>
+            <label for='<?php echo $index ?>'>
+                <?php echo $valAnswerByQuestion->getAnswer() ?>
+                <?php echo ($valAnswerByQuestion->getTrueAnswer()) ? "<span style='color: #e20a1c;font-weight: bold'>:)</span>" : '' ?>
+                <br>
+            </label>
+            <br/>
+            <?php
         }
         if (($questionsCounter + 1) == $countQuestions) {
             echo " <Br><Br><button class='waves-effect waves-teal btn-large' type='submit'>

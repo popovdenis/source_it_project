@@ -54,7 +54,7 @@ class QuestionDaoImpl implements QuestionsDao
             return array();
         }
 
-        $sql = "SELECT * FROM `question` WHERE id IN (" . implode(',', $questionsIds) . ")";
+        $sql = "SELECT * FROM `question` WHERE id IN (" . implode(',', $questionsIds) . ") ORDER BY id";
 
         $query_result = mysqli_query(DB_connection::db_connect(), $sql);
 
@@ -105,24 +105,22 @@ class QuestionDaoImpl implements QuestionsDao
 
     public function getAnswersByQuestion($id)//получить список ответов на вопрос
     {
-        $sql
-            = "SELECT `answer`.id, `answer`.answer, `answer`.trueAnswer FROM `answer`
+        $sql = "SELECT `answer`.id, `answer`.answer, `answer`.trueAnswer FROM `answer`
         INNER JOIN `question_answer`
         ON `answer`.`id` = `question_answer`.`answer_id`
         INNER JOIN `question`
         ON `question`.`id` = `question_answer`.`question_id`
-        WHERE `question_id`='$id';";
+        WHERE `question_answer`.`question_id`='$id';";
 
         $query_result = mysqli_query(DB_connection::db_connect(), $sql);
+        $arrResult = array();
         if ($query_result) {
-
-            $arrResult = array();
             while ($row = mysqli_fetch_assoc($query_result)) {
                 $arrResult[] = new Answer($row['answer'], $row['id'], $row['trueAnswer']);
             }
-
-            return $arrResult;
         }
+
+        return $arrResult;
     }
 
     public function getCorrectCountQuestionsByAnswers($questionsIds, $answersIds)

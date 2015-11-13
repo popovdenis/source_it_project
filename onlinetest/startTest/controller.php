@@ -10,7 +10,7 @@ require_once BASE_DIR . "onlinetest/dao/ImplAnswerDao.php";
 
 session_start();
 
-if (!isset($_SESSION['questionsIds'])) {
+if (!isset($_SESSION['questions'])) {
     header("Location: " . BASE_URL . 'onlinetest/startTest/model.php');
 }
 
@@ -18,14 +18,18 @@ $questionDao = new QuestionDaoImpl();
 $answerDao = new AnswerDaoImpl();
 
 // правильные ответы согласно БД
-$countCorrectQuestions = $questionDao
-        ->getCorrectCountQuestionsByAnswers($_SESSION['questionsIds'], $_SESSION['answers']);
+$questionsIds = array();
+foreach ($_SESSION['questions'] as $question) {
+    $questionsIds[] = $question->getId();
+}
+$countCorrectQuestions = $questionDao->getCorrectCountQuestionsByAnswers($questionsIds, $_SESSION['answers']);
 
 //колличество вопросов
-$countAllQuestions = count($_SESSION['questionsIds']);
+$countAllQuestions = count($_SESSION['questions']);
 
 unset($_SESSION['answers']);
-setcookie(session_name('answers'), '');
+unset($_SESSION['questions']);
+unset($_SESSION['questionsCounter']);
 ?>
 <!DOCTYPE html>
 <html>

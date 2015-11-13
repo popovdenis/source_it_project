@@ -8,8 +8,8 @@ session_start();
 if (isset($_SESSION['answers'])) {
     unset($_SESSION['answers']);
 }
-if (isset($_SESSION['questionsIds'])) {
-    unset($_SESSION['questionsIds']);
+if (isset($_SESSION['questions'])) {
+    unset($_SESSION['questions']);
 }
 
 if (!isset($_POST['test'])) {
