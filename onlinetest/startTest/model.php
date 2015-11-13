@@ -63,18 +63,19 @@ $countTest = round(($questionsCounter * 100) / $countQuestions);
 </nav>
 <div class="container">
     <p class='cyan-text text-darken-2 right'><b>Пройдено <?php echo $countTest; ?> %</b></p>
-    <br><br><h5 class=' cyan-text text-darken-3 '><?php echo $currentQuestion->getQuestion(); ?></h5>
+    <br><br><h5 class='cyan-text text-darken-3'>Вопрос:</h5>
+    <div class='cyan-text text-darken-3'><pre><?php echo htmlspecialchars($currentQuestion->getQuestion()) ?></pre></div>
     <form action="model.php" method="post">
-        <b>Question: <?php echo $currentQuestion->getId() ?></b><br />
         <input type="hidden" name="q" value="<?php echo $questionsCounter; ?>">
-        <?php foreach ($questionDao->getAnswersByQuestion($currentQuestion->getId()) as $index => $valAnswerByQuestion) { ?>
+        <?php
+        $answersList = $questionDao->getAnswersByQuestion($currentQuestion->getId());
+        shuffle($answersList);
+        foreach ($answersList as $index => $valAnswerByQuestion) { ?>
             <br>
-            <span>answer: <?php echo $valAnswerByQuestion->getId() ?></span>
             <input type='checkbox' name='answer[]' value='<?php echo $valAnswerByQuestion->getId() ?>'
                    id='<?php echo $index ?>'>
             <label for='<?php echo $index ?>'>
-                <?php echo $valAnswerByQuestion->getAnswer() ?>
-                <?php echo ($valAnswerByQuestion->getTrueAnswer()) ? "<span style='color: #e20a1c;font-weight: bold'>:)</span>" : '' ?>
+                <?php echo htmlspecialchars($valAnswerByQuestion->getAnswer()) ?>
                 <br>
             </label>
             <br/>
