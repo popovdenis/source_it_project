@@ -9,7 +9,6 @@ require_once BASE_DIR . "header-logo-bar.php";
 require_once BASE_DIR . "header-menu.php"; 
 //MENU SECTION END
 
-
 //open db connection
 include_once('models/open_db.php');
 
