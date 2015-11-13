@@ -9,8 +9,8 @@
 include_once "../_autoload.php";
 include_once BASE_DIR . "article/article.php";
 
+$art = new Article();
 if(isset($_POST['title']) && isset($_POST['description']) && !empty($_POST['title']) && !empty($_POST['description'])) {
-    $art = new Article();
     if ($art->postArticle($_POST['title'],$_POST['description'])){
         echo "Данные сохранены:    " . "<a href='index.php'>Список новостей</a>";
     }else{

@@ -2,6 +2,8 @@
 include_once "../_autoload.php";
 
 include BASE_DIR . 'user/funcs.php';
+
+$user = new User();
 if (!empty($_POST['f_name']) and !empty($_POST['l_name']) and
     !empty($_POST['email']) and !empty($_POST['pass'])
 ) {
@@ -10,7 +12,7 @@ if (!empty($_POST['f_name']) and !empty($_POST['l_name']) and
     $email = $_POST['email'];
     $pass = $_POST['pass'];
     $phone = (!empty($_POST['phone'])) ? $_POST['phone'] : " ";
-    $user = new User();
+
     $user->setUser($first_name, $last_name, $email, $pass, $phone);
     $res = $user->postUser();
     if ($res) {

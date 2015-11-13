@@ -52,24 +52,17 @@ CREATE TABLE article(
   `created_at` DATETIME NOT NULL
 );
 
+CREATE TABLE tags (
+  `id`  INT(5) PRIMARY KEY AUTO_INCREMENT,
+  `tag` VARCHAR(50)
+);
+
 CREATE TABLE article_tag(
     `id` INT(5) PRIMARY KEY AUTO_INCREMENT,
     `article_id` INT(50), INDEX(article_id),
     `tag_id` INT(50), INDEX(tag_id),
     FOREIGN KEY (article_id) REFERENCES article(id),
     FOREIGN KEY (tag_id) REFERENCES tags(id)
-);
-
-CREATE TABLE tags (
-    `id`  INT(5) PRIMARY KEY AUTO_INCREMENT,
-    `tag` VARCHAR(50)
-);
-
-CREATE TABLE article (
-    `id`          INT(5) PRIMARY KEY AUTO_INCREMENT,
-    `title`       VARCHAR(70)  NOT NULL,
-    `description` VARCHAR(250) NOT NULL,
-    `created_at`  DATETIME     NOT NULL
 );
 
 INSERT INTO `article` (`title`, `description`, `created_at`) VALUES ('Sample title1','Sample description', NOW());
@@ -88,7 +81,6 @@ INSERT INTO `article` (`title`, `description`, `created_at`) VALUES ('Sample tit
 INSERT INTO `article` (`title`, `description`, `created_at`) VALUES ('Sample title14','Sample description', NOW());
 INSERT INTO `article` (`title`, `description`, `created_at`) VALUES ('Sample title15','Sample description', NOW());
 INSERT INTO `article` (`title`, `description`, `created_at`) VALUES ('Sample title16','Sample description', NOW());
-
 
 INSERT INTO `tags` (`tag`) VALUES ('JavaScript');
 INSERT INTO `tags` (`tag`) VALUES ('WordPress');
