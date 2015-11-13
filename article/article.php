@@ -21,23 +21,25 @@ putArticle ­ обновить статью
 deleteArticle ­ удалить статью
  */
 include_once "../_autoload.php";
+<<<<<<< HEAD
 date_default_timezone_set('UTC');
 class Article
+=======
+
+class Article extends Controller
+>>>>>>> 08c2b8aaf40919eb452fb04954d39035f4c12235
 {
     public $id;
 
-    public function  __construct()
-    {
-        $this->base = new DataBase();
-    }
+    protected static $menuOption = 'article';
 
     public function postArticle($title_use, $description_use) // сохранить статью
     {
         $query = "INSERT INTO article (`title`,`description`,`created_at`) VALUES (:title, :description, :createdAt)";
-        $this->base
+        $this->db
             ->prepare($query)
-            ->bindValue(':title', $this->base->escape($title_use))
-            ->bindValue(':description', $this->base->escape($description_use))
+            ->bindValue(':title', $this->db->escape($title_use))
+            ->bindValue(':description', $this->db->escape($description_use))
             ->bindValue(':createdAt', (new DateTime())->format('Y-m-d H:i:s'))
             ->execute();
 
@@ -49,32 +51,32 @@ class Article
     {
         $this->id = $get;
         $query = "SELECT * FROM `article` WHERE `id` = :id";
-        $this->base
+        $this->db
             ->prepare($query)
-            ->bindValue(':id', $this->base->escape($this->id), DataBase::PARAM_INT)
+            ->bindValue(':id', $this->db->escape($this->id), DataBase::PARAM_INT)
             ->execute();
 
-        return $this->base->fetchAll();
+        return $this->db->fetchAll();
     }
 
     public function getArticles() // получение списков статей
     {
         $query = "SELECT * FROM article";
-        $this->base
+        $this->db
             ->prepare($query)
             ->execute();
 
-        return $this->base->fetchAll();
+        return $this->db->fetchAll();
     }
 
     public function putArticle($id, $title, $description) // обновить статью
     {
         $query = "UPDATE article SET `title`= :title, `description` = :description WHERE `id` = :id";
-        $this->base
+        $this->db
             ->prepare($query)
-            ->bindValue(':title', $this->base->escape($title))
-            ->bindValue(':description', $this->base->escape($description))
-            ->bindValue(':id', $this->base->escape($id), DataBase::PARAM_INT)
+            ->bindValue(':title', $this->db->escape($title))
+            ->bindValue(':description', $this->db->escape($description))
+            ->bindValue(':id', $this->db->escape($id), DataBase::PARAM_INT)
             ->execute();
 
         return true;
@@ -84,9 +86,9 @@ class Article
     public function deleteArticle($id) // удалить статью
     {
         $query = "DELETE FROM article WHERE id = :id";
-        $this->base
+        $this->db
             ->prepare($query)
-            ->bindValue(':id', $this->base->escape($id), DataBase::PARAM_INT)
+            ->bindValue(':id', $this->db->escape($id), DataBase::PARAM_INT)
             ->execute();
 
         return true;

@@ -11,18 +11,19 @@ if (isset($_SESSION['user']) and !empty($_SESSION['user'])) {
 } else {
     die('Что-то пошло не так. :(');
 }
+
+$user = new User();
 if (!empty($_POST['f_name']) and !empty($_POST['l_name']) and !empty($_POST['email'])) {
     $firs_name = $_POST['f_name'];
     $last_name = $_POST['l_name'];
     $email = $_POST['email'];
     $pass = (!empty($_POST['pass']) ? $_POST['pass'] : $_SESSION['user']['password']);
     $phone = (!empty($_POST['phone'])) ? $_POST['phone'] : " ";
-    $user = new User();
+
     $user->setUser($firs_name, $last_name, $email, $pass, $phone);
     $res = $user->putUser($id);
     if ($res) {
         session_destroy();
-
         header("Location: " .  BASE_URL . "user/");
     }
 }

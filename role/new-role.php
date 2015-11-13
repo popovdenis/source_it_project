@@ -7,6 +7,8 @@
  */
 include_once "../_autoload.php";
 include BASE_DIR . "role/Role.php";
+
+$role = new Role();
 ?>
 <?php include_once BASE_DIR . "header.php" ?>
 <body>
@@ -18,7 +20,6 @@ include BASE_DIR . "role/Role.php";
 <div class="content-wrapper">
     <div class="container">
 <?php
-$role = new Role();
 if (isset($_POST['action'])) {
     if (!empty($_POST['role'])) {
         $result = $role->postRole('role', $_POST['role']);

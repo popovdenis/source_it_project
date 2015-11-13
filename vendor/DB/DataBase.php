@@ -92,4 +92,9 @@ class DataBase
     {
         return self::$db->quote($value);
     }
+
+    public function numRows()
+    {
+        return self::$stmt->rowCount();
+    }
 }
