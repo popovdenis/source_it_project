@@ -18,6 +18,7 @@
                         <li><a href="<?php echo BASE_URL ?>user/">Users</a></li>
                         <li><a href="<?php echo BASE_URL ?>gallery/">Gallery</a></li>
                         <li><a href="<?php echo BASE_URL ?>article/">News</a></li>
+                        <li><a href="<?php echo BASE_URL ?>onlinetest/startTest/index.php">OnlineTest</a></li>
 						 <li><a href="<?php echo BASE_URL ?>tagcloud/">TagCloud</a></li>
                     </ul>
                 </div>

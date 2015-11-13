@@ -1,5 +1,4 @@
 <?php
-
 include_once "../_autoload.php";
 include_once BASE_DIR . "article/article.php";
 
