@@ -4,7 +4,7 @@ include_once "../_autoload.php";
 /**
  *
  */
-class User extends DataBase
+class User extends Controller
 {
     private $firstname;
     private $lastname;
@@ -24,9 +24,9 @@ class User extends DataBase
     public function check_email()
     {
         $query = "SELECT id FROM user WHERE email = :email";
-        $this
+        $this->db
             ->prepare($query)
-            ->bindValue(':email', $this->escape($this->email))
+            ->bindValue(':email', $this->db->escape($this->email))
             ->execute();
 
         $res = $this->fetchAll();
@@ -37,9 +37,9 @@ class User extends DataBase
     public function getUser($id)
     {
         $query = "SELECT * FROM `user` WHERE `id` = :id";
-        $this
+        $this->db
             ->prepare($query)
-            ->bindValue(':id', $this->escape($id), DataBase::PARAM_INT)
+            ->bindValue(':id', $this->db->escape($id), DataBase::PARAM_INT)
             ->execute();
 
         return $this->fetchRow();
@@ -50,12 +50,12 @@ class User extends DataBase
         $sql = ($param) ? "SELECT * FROM user ORDER BY :order DESC"
             : "SELECT * FROM user ORDER BY :order";
 
-        $this
+        $this->db
             ->prepare($sql)
-            ->bindValue(':order', $this->escape($order))
+            ->bindValue(':order', $this->db->escape($order))
             ->execute();
 
-        return $this->fetchAll();
+        return $this->db->fetchAll();
     }
 
     public function postUser()
@@ -65,13 +65,13 @@ class User extends DataBase
             $sql = "INSERT INTO user(`firstname`, `lastname`, `email`, `password`, `phone`, `created_at`)
                 VALUES(:firstname, :lastname, :email, :password, :phone, :created_at)";
 
-            $this
+            $this->db
                 ->prepare($sql)
-                ->bindValue(':firstname', $this->escape($this->firstname))
-                ->bindValue(':lastname', $this->escape($this->lastname))
-                ->bindValue(':email', $this->escape($this->email))
-                ->bindValue(':password', $this->escape($this->password))
-                ->bindValue(':phone', $this->escape($this->phone))
+                ->bindValue(':firstname', $this->db->escape($this->firstname))
+                ->bindValue(':lastname', $this->db->escape($this->lastname))
+                ->bindValue(':email', $this->db->escape($this->email))
+                ->bindValue(':password', $this->db->escape($this->password))
+                ->bindValue(':phone', $this->db->escape($this->phone))
                 ->bindValue(':created_at', (new DateTime())->format('Y-m-d H:i:s'))
                 ->execute();
 
@@ -90,15 +90,15 @@ class User extends DataBase
                 password = :password,
                 phone = :phone
             WHERE id = :id";
-    
-        $this
+
+        $this->db
             ->prepare($sql)
-            ->bindValue(':firstname', $this->escape($this->firstname))
-            ->bindValue(':lastname', $this->escape($this->lastname))
-            ->bindValue(':email', $this->escape($this->email))
-            ->bindValue(':password', $this->escape($this->password))
-            ->bindValue(':phone', $this->escape($this->phone))
-            ->bindValue(':id', $this->escape($id), DataBase::PARAM_INT)
+            ->bindValue(':firstname', $this->db->escape($this->firstname))
+            ->bindValue(':lastname', $this->db->escape($this->lastname))
+            ->bindValue(':email', $this->db->escape($this->email))
+            ->bindValue(':password', $this->db->escape($this->password))
+            ->bindValue(':phone', $this->db->escape($this->phone))
+            ->bindValue(':id', $this->db->escape($id), DataBase::PARAM_INT)
             ->execute();
 
         return true;
@@ -107,9 +107,9 @@ class User extends DataBase
     public function deleteUser($id)
     {
         $sql = "DELETE FROM user WHERE id = :id";
-        $this
+        $this->db
             ->prepare($sql)
-            ->bindValue(':id', $this->escape($id), DataBase::PARAM_INT)
+            ->bindValue(':id', $this->db->escape($id), DataBase::PARAM_INT)
             ->execute();
 
         return true;
@@ -118,12 +118,12 @@ class User extends DataBase
     public function getUserRole($id)
     {
         $sql = "SELECT role FROM user WHERE id = :id";
-        $this
+        $this->db
             ->prepare($sql)
-            ->bindValue(':id', $this->escape($id), DataBase::PARAM_INT)
+            ->bindValue(':id', $this->db->escape($id), DataBase::PARAM_INT)
             ->execute();
 
-        return $this->fetchAll();
+        return $this->db->fetchAll();
     }
 }
 
@@ -135,5 +135,3 @@ $user_arr = array(
     'phone',
     'created_at'
 ); //массив для сортировки
-
-?>

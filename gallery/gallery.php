@@ -1,20 +1,15 @@
 <?php
 include_once "../_autoload.php";
 
-class Gallery
+class Gallery extends Controller
 {
-    public function __construct()
-    {
-        $this->database = new DataBase();
-    }
-
     public function postGallery($title, $desc)
     {
         $query = "INSERT INTO gallery(`title`, `description`, `created_at`) VALUES (:title, :description, :createdAt)";
-        $this->database
+        $this->db
             ->prepare($query)
-            ->bindValue(':title', $this->database->escape($title))
-            ->bindValue(':description', $this->database->escape($desc))
+            ->bindValue(':title', $this->db->escape($title))
+            ->bindValue(':description', $this->db->escape($desc))
             ->bindValue(':createdAt', (new DateTime())->format('Y-m-d H:i:s'))
             ->execute();
 
@@ -24,32 +19,32 @@ class Gallery
     public function getGallery($update)
     {
         $query = "SELECT `title`, `description` FROM gallery WHERE `id` = :id";
-        $this->database
+        $this->db
             ->prepare($query)
-            ->bindValue(':id', $this->database->escape($update), DataBase::PARAM_INT)
+            ->bindValue(':id', $this->db->escape($update), DataBase::PARAM_INT)
             ->execute();
 
-        return $this->database->fetchAll();
+        return $this->db->fetchAll();
     }
 
     public function getGalleries()
     {
         $query = "SELECT * FROM gallery";
-        $this->database
+        $this->db
             ->prepare($query)
             ->execute();
 
-        return $this->database->fetchAll();
+        return $this->db->fetchAll();
     }
 
     public function putGallery($title, $desc, $update)
     {
         $query = "UPDATE gallery SET `title` = :title, `description` = :description WHERE `id` = :id";
-        $this->database
+        $this->db
             ->prepare($query)
-            ->bindValue(':title', $this->database->escape($title))
-            ->bindValue(':description', $this->database->escape($desc))
-            ->bindValue(':id', $this->database->escape($update), DataBase::PARAM_INT)
+            ->bindValue(':title', $this->db->escape($title))
+            ->bindValue(':description', $this->db->escape($desc))
+            ->bindValue(':id', $this->db->escape($update), DataBase::PARAM_INT)
             ->execute();
 
         return true;
@@ -58,9 +53,9 @@ class Gallery
     public function deleteGallery($delete)
     {
         $query = "DELETE FROM gallery WHERE `id` = :id";
-        $this->database
+        $this->db
             ->prepare($query)
-            ->bindValue(':id', $this->database->escape($delete), DataBase::PARAM_INT)
+            ->bindValue(':id', $this->db->escape($delete), DataBase::PARAM_INT)
             ->execute();
 
         return true;
