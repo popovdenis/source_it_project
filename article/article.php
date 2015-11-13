@@ -26,6 +26,8 @@ class Article extends Controller
 {
     public $id;
 
+    protected static $menuOption = 'article';
+
     public function postArticle($title_use, $description_use) // сохранить статью
     {
         $query = "INSERT INTO article (`title`,`description`,`created_at`) VALUES (:title, :description, :createdAt)";

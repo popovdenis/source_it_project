@@ -3,6 +3,8 @@ include_once "../_autoload.php";
 
 class tagcloud_model extends Controller
 {
+    protected static $menuOption = 'tagcloud';
+
     var $tags; //array(id,tag.total)
     var $largest;
 

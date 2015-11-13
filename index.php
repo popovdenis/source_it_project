@@ -87,7 +87,7 @@ include_once "_autoload.php";
             </div>
         </div>
         <div class="col-md-3 col-sm-3 col-xs-6">
-            <div class="dashboard-div-wrapper bk-clr-one">
+            <div class="dashboard-div-wrapper bk-clr-six">
                 <i class="fa fa-cogs dashboard-div-icon"></i>
 
                 <div class="progress progress-striped active">

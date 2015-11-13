@@ -6,6 +6,8 @@ include_once "../_autoload.php";
  */
 class User extends Controller
 {
+    protected static $menuOption = 'user';
+
     private $firstname;
     private $lastname;
     private $email;

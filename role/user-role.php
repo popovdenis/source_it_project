@@ -36,7 +36,7 @@ $userObj = new User();
                         <?php
                         foreach ($roleObj->getRoles('role') as $index => $role) {
                             ?>
-                            <option value="<?php echo $role[1] ?>"><?php echo $role[1] ?></option>
+                            <option value="<?php echo $role['role'] ?>"><?php echo $role['role'] ?></option>
                             <br>
                         <?php
                         }

@@ -3,6 +3,8 @@ include_once "../_autoload.php";
 
 class Gallery extends Controller
 {
+    protected static $menuOption = 'gallery';
+
     public function postGallery($title, $desc)
     {
         $query = "INSERT INTO gallery(`title`, `description`, `created_at`) VALUES (:title, :description, :createdAt)";
