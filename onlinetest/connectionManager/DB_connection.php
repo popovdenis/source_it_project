@@ -7,6 +7,7 @@ class DB_connection
         $connect = mysqli_connect(
             $config['host'], $config['username'], $config['password'], $config['database'], $config['port']
         );
+        $connect->query("SET NAMES 'utf8'");
         if ($connect) {
             return $connect;
         } else {
