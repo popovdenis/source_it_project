@@ -35,7 +35,7 @@ if (!isset($_POST['test'])) {
     <div class="nav-wrapper red lighten-1">
         <a href="#" class="brand-logo right">Online-test</a>
         <ul class="left">
-            <li><a href="index.php">На главную</a></li>
+            <li><a href="<?php echo BASE_URL ?>">На главную</a></li>
         </ul>
     </div>
 </nav>
