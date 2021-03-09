@@ -31,7 +31,7 @@ class User extends Controller
             ->bindValue(':email', $this->db->escape($this->email))
             ->execute();
 
-        $res = $this->fetchAll();
+        $res = $this->db->fetchAll();
 
         return $res;
     }

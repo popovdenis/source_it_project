@@ -5,7 +5,7 @@ require_once BASE_DIR . "onlinetest/connectionManager/DB_connection.php";
 require_once BASE_DIR . "onlinetest/dao/AnswersDao.php";
 
 /**
- * @author Maria Ostashevskaya
+ *
  */
 class AnswerDaoImpl implements AnswersDao
 {

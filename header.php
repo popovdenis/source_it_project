@@ -16,7 +16,7 @@
     <!--[if IE]>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <![endif]-->
-    <title>Source IT Team Project</title>
+    <title>Alexander Revutskiy Project</title>
     <!-- BOOTSTRAP CORE STYLE  -->
     <link href="<?php echo ASSETS_URL ?>css/bootstrap.css" rel="stylesheet" />
     <!-- FONT AWESOME ICONS  -->

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Denis
- * Date: 29.10.2015
- * Time: 1:30
- */
 class Autoloader
 {
     // карта соответствий названий классов и файлов где они хранятся

@@ -25,7 +25,7 @@ $countCorrectQuestions = $questionDao
 $countAllQuestions = count($_SESSION['questionsIds']);
 
 unset($_SESSION['answers']);
-setcookie(session_name('answers'), '');
+// setcookie(session_name('answers'), '');
 ?>
 <!DOCTYPE html>
 <html>
@@ -66,3 +66,4 @@ setcookie(session_name('answers'), '');
 </div>
 </body>
 </html>
+

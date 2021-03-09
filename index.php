@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Denis
- * Date: 30.10.2015
- * Time: 20:47
- */
 include_once "_autoload.php";
 ?>
 <?php include_once "header.php" ?>
